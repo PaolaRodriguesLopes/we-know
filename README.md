@@ -45,4 +45,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
 
+CREATE TABLE IF NOT EXISTS `courses` (
+  `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(50) DEFAULT '0',
+  `duration` varchar(150) NOT NULL DEFAULT '0', 
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
