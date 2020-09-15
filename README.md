@@ -3,6 +3,21 @@
 -> Após clonar o projeto, rodar o comando:
 npm i 
 
+-> Criar pasta com o nome "database" dentro da pasta API
+-> Adicionar arquivo com o nome connection.js:
+
+var knex = require('knex')({
+    client: 'mysql2',
+    connection: {
+      host : '127.0.0.1',
+      user : 'root',
+      password : '',
+      database : 'weknow'
+    }
+  });
+
+module.exports = knex
+
 -> criar database com o nome "weknow"
 Tabelas:
 
@@ -30,15 +45,4 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
 
--> Adicionar arquivo com o nome connection.js na pasta API/database:
-var knex = require('knex')({
-    client: 'mysql2',
-    connection: {
-      host : '127.0.0.1',
-      user : 'root',
-      password : '',
-      database : 'weknow'
-    }
-  });
 
-module.exports = knex
