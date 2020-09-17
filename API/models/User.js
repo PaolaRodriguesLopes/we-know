@@ -51,7 +51,7 @@ class User{
             var hash = await bcrypt.hash(password, 10);
             await knex.insert({email,password: hash,name,role: 0,course,ra}).table("users");
         }catch(err){
-            console.log(err);
+            return {status: false,err: err}
         }
     }   
 
