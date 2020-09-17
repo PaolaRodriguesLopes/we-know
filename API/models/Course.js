@@ -2,7 +2,7 @@ var knex = require("../database/connection");
 var bcrypt = require("bcrypt");
 
 
-class User{
+class Course{
 
     async findAll(){
         try{
@@ -16,7 +16,7 @@ class User{
 
     async findById(id){
         try{
-            var result = await knex.select(["id","description","duration"]).where({id:id}).table("cousers");
+            var result = await knex.select(["id","description","duration"]).where({id:id}).table("courses");
             
             if(result.length > 0){
                 return result[0];
@@ -50,11 +50,11 @@ class User{
 
            
             if(description != undefined){
-                editUser.description = description;
+                editCourse.description = description;
             }
 
             if(duration != undefined){
-                editUser.duration = duration;
+                editCourse.duration = duration;
             }
 
             try{
@@ -87,4 +87,4 @@ class User{
     
 }
 
-module.exports = new User();
+module.exports = new Course();
