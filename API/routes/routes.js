@@ -5,6 +5,7 @@ var HomeController = require("../controllers/HomeController");
 var UserController = require("../controllers/UserController");
 var CourseController = require("../controllers/CourseController");
 var CategoryController = require("../controllers/CategoryController");
+var SubjectController = require("../controllers/SubjectController");
 var AdminAuth = require("../middleware/AdminAuth");
 const { remove } = require("../controllers/UserController");
 
@@ -35,6 +36,13 @@ router.get("/category",AdminAuth,CategoryController.getCategories);
 router.get("/category/:id",AdminAuth,CategoryController.getCategoryByID);
 router.put("/category",AdminAuth,CategoryController.edit);
 router.delete("/category/:id",AdminAuth,CategoryController.remove);
+
+// Subject routes
+router.post('/subject',AdminAuth,SubjectController.create);
+router.get("/subject",AdminAuth,SubjectController.getSubjects);
+router.get("/subject/:id",AdminAuth,SubjectController.getSubjectByID);
+router.put("/subject",AdminAuth,SubjectController.edit);
+router.delete("/subject/:id",AdminAuth,SubjectController.remove);
 
 
 module.exports = router;

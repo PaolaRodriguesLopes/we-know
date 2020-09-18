@@ -41,3 +41,10 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `description` varchar(50) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS `subjects` (
+  `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(50) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
