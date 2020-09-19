@@ -48,3 +48,17 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `description` varchar(50) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `articles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100),
+  `description` varchar(250),
+  `text` MEDIUMTEXT,
+  `category` int(11),
+  `author` int(10),
+  `subject` varchar(10),
+  `published_date` datetime,
+  `last_changed` datetime,
+  `status` int(10),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
