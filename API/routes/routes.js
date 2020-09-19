@@ -8,6 +8,8 @@ var CategoryController = require("../controllers/CategoryController");
 var SubjectController = require("../controllers/SubjectController");
 var ArticleController = require("../controllers/ArticleController");
 var AdminAuth = require("../middleware/AdminAuth");
+var MediumAuth = require("../middleware/MediumAuth");
+var LoginAuth = require("../middleware/LoginAuth");
 const { remove } = require("../controllers/UserController");
 
 //User routes
@@ -46,11 +48,12 @@ router.put("/subject",AdminAuth,SubjectController.edit);
 router.delete("/subject/:id",AdminAuth,SubjectController.remove);
 
 // Article routes
-router.post('/article',AdminAuth,ArticleController.create);
+router.post('/article',LoginAuth,ArticleController.create);
 router.get("/article",ArticleController.getArticles);
 router.get("/article/:id",ArticleController.getArticleByID);
-router.put("/article",AdminAuth,ArticleController.edit);
-router.delete("/article/:id",AdminAuth,ArticleController.remove);
+router.put("/article",LoginAuth,ArticleController.edit);
+router.delete("/article/:id",LoginAuth,ArticleController.remove);
+router.put("/article/status",MediumAuth,ArticleController.editStatus);
 
 
 module.exports = router;

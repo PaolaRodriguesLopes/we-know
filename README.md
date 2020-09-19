@@ -59,6 +59,6 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `subject` varchar(10),
   `published_date` datetime,
   `last_changed` datetime,
-  `status` int(10),
+  `status_article` int(10),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;

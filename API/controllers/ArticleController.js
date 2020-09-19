@@ -62,8 +62,25 @@ class ArticleController{
      }
 
      async edit(req, res){
-        var {id, title,description,text,category,author,subject, status} = req.body;
-        var result = await Article.update(id,title,description,text,category,author,subject, status);
+        var {id, title,description,text,category,author,subject, status_article} = req.body;
+        var result = await Article.update(id,title,description,text,category,author,subject, status_article);
+        if(result != undefined){
+            if(result.status){
+                res.status(200);
+                res.send("Tudo OK!");
+            }else{
+                res.status(406);
+                res.send(result.err)
+            }
+        }else{
+            res.status(406);
+            res.send("Ocorreu um erro no servidor!");
+        }
+    }
+
+    async editStatus(req, res){
+        var {id, status_article} = req.body;
+        var result = await Article.updateStatus(id, status_article);
         if(result != undefined){
             if(result.status){
                 res.status(200);
