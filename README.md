@@ -62,3 +62,15 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `status_article` int(10),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
+
+-----------------------------------------------
+
+Após fazer o clone da pasta weKnow, executar o comando npm i
+
+Para executar o projeto 
+abrir dois terminais 
+entrar na pasta de API e executar 
+nodemon .\index.js
+
+no outro terminal entrar na pasta do weKnow e executar 
+npm run serve
