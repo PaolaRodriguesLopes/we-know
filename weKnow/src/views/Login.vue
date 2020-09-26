@@ -1,24 +1,26 @@
 <template>
-    <div>
-        <h2>Login</h2>    
-        <hr>
-
-        <div class="columns is-centered">
-            <div class="column is-half">
-                <div v-if="error != undefined">
-                    <div class="notification is-danger">
-                        {{error}}
+    
+        
+        <div class="default">               
+                <div class="box-login">
+                    <h3><img src="../assets/WeKnow.png" alt="We Know"></h3>
+                    <div v-if="error != undefined">
+                        <div class="notification is-danger">
+                            {{error}}
+                        </div>
                     </div>
+                    <label class="label-login">E-mail</label>
+                    <input type="email" placeholder="email@email.com" class="input" v-model="email">
+                    <label class="label-login">Senha</label>
+                    <input type="password" placeholder="******" class="input" v-model="password">
+                    
+                    <button class="button is-primary" >CADASTRAR</button>
+                    <button class="button is-link" @click="login">ENTRAR</button>
+                    <p class="forgotKey"><a href="#">Esqueci minha senha</a></p>
                 </div>
-                <p>E-mail</p>
-                <input type="email" placeholder="email@email.com" class="input" v-model="email">
-                <p>Senha</p>
-                <input type="password" placeholder="******" class="input" v-model="password">
-                <hr>
-                <button class="button is-success" @click="login">Logar</button>
-            </div>
+            
         </div>
-    </div>    
+       
 </template>
 
 <script>
@@ -50,5 +52,41 @@ export default {
 </script>
 
 <style scoped>
+body{
+    background: #CCC8C8 !important;
+}
+
+.default{
+    background: #CCC8C8;
+    min-height: 100%;
+    display: flex;
+}
+.box-login{
+    background: #ffffff;
+    border: 1px solid #ccc;
+    margin: 15% auto;
+    width: 500px;
+    height: 370px;
+    padding: 20px 50px;
+}
+
+.label-login{
+    float: left;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 15px 0 5px 0;
+}
+
+button{
+    font-weight: 600;
+    margin: 25px 15px;
+    width: 40%;
+}
+
+.forgotKey a:link, .forgotKey a:visited{
+    color: #999999;
+    text-decoration: underline;
+}
 
 </style>
