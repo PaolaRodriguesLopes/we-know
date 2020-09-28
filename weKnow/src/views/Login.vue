@@ -64,10 +64,11 @@ body{
 .box-login{
     background: #ffffff;
     border: 1px solid #ccc;
-    margin: 15% auto;
+    margin: auto;
     width: 500px;
     height: 370px;
     padding: 20px 50px;
+    box-shadow: 3px 1px 13px 7px #ada8a8;
 }
 
 .label-login{

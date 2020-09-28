@@ -1,5 +1,49 @@
 <template>
   <div id="app">
+    <div class="menuDefault">
+      <div class="logo"><img src="./assets/WeKnow.png" border=0 alt="weknow"></div>
+      <nav class="menu">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Meus Artigos</a></li>
+          <li><a href="#">Novo Arigo</a></li>
+          <li><a href="#">Ajuda</a></li>
+          <hr>
+          <li><a href="#">Últimos Artigos</a></li>
+          <li><a href="#">Engenharia Computação</a></li>
+          <li><a href="#">Engenharia Elétrica</a></li>
+          <li><a href="#">Engenharia Produção</a></li>
+          <li><a href="#">IoT</a></li>
+          <li><a href="#">Física</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="filterBar">
+      <div class="filters">
+          <div class="field field1">
+            <label>Busca</label>
+            <input type="text">
+          </div>
+
+          <div class="field field2">
+            <label>Filtrar por:</label>
+            <select name="" id="">
+              <option value="">All</option>
+            </select>            
+          </div>
+
+          <div class="field field3">
+            <button class="btn-filtrar">FILTRAR</button>
+          </div>
+      </div>
+
+      <div class="profile">
+        <p>Seja bem-vindo, <span class="p-nome">Fernando</span><br>
+        <a href="#">Editar Perfil</a> - <a href="#">Sair</a>        
+        </p>
+      </div>
+
+    </div>
     <router-view/>
   </div>
 </template>
@@ -30,4 +74,111 @@ html, body, #app{
   min-height: 100%;
   height: 100%;
 }
+
+.menuDefault{
+  width: 20%;
+  min-height: 100%;
+  background: #6D6D6D;
+  float: left;
+}
+
+.logo{
+  background: #CCC8C8;
+  height: 115px;
+  padding: 25px;
+}
+
+.menu ul{
+    list-style: inside;
+    text-align: left;
+    padding: 10px 25px 10px;
+    margin: 0;
+    color: #fff;
+}
+
+.menu ul li{
+  margin: 10px 0;
+}
+
+.menu ul li a:link, .menu ul li a:visited{
+  color: #ffffff;
+}
+
+.menu ul li a:hover{
+  text-decoration: underline;
+}
+
+.filterBar{
+    width: 80%;
+    background: #E6E6E6;
+    float: left;
+    height: 116px;
+    display: flex;
+}
+.filters{
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile{
+  display: flex;
+  width: 28%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile a:link{
+  color: #2c3e50;
+  text-decoration: underline;
+  font-size: 12px;
+}
+
+label{
+  font-weight: 600;
+  font-size: 14px;
+}
+
+input, select{
+  padding: 10px;
+  border: 1px solid #cccccc;
+}
+
+
+.field{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+  margin: 5px;
+  height: 70px;
+}
+
+.field1{
+  width: 50%;
+  
+}
+.field2{
+  width: 20%;
+  
+}
+.field3{
+  width: 15%;
+}
+
+.btn-filtrar{
+  background: #9499B9;
+  color: #ffffff;
+  padding: 11px;
+  border: none;
+  margin-top: 18px;
+}
+
+.p-nome{
+  font-weight: 600;
+}
+
 </style>

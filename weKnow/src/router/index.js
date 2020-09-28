@@ -8,6 +8,7 @@ import axios from 'axios';
 import Edit from '../views/Edit.vue'
 
 
+
 function AdminAuth(to, from, next){
   if(localStorage.getItem('token') != undefined){
 
@@ -61,6 +62,7 @@ Vue.use(VueRouter)
     beforeEnter: AdminAuth
   },
   {
+    
     path: '/about',
     name: 'About',
     // route level code-splitting
