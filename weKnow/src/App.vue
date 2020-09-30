@@ -44,7 +44,9 @@
       </div>
 
     </div>
-    <router-view/>
+<router-view class="mainContent"/>
+
+    
   </div>
 </template>
 
@@ -181,4 +183,9 @@ input, select{
   font-weight: 600;
 }
 
+
+.mainContent{
+  float: left;
+  width: 80%;
+}
 </style>
