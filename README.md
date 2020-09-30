@@ -6,15 +6,6 @@ npm i
 -> criar database com o nome "weknow"
 Tabelas:
 
-CREATE TABLE IF NOT EXISTS `passwordtokens` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `token` varchar(200) NOT NULL DEFAULT '0',
-  `user_id` int(10) unsigned NOT NULL DEFAULT 0,
-  `used` tinyint(3) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `FK_passwordtokens_users` (`user_id`),
-  CONSTRAINT `FK_passwordtokens_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -27,6 +18,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
+
+
+CREATE TABLE IF NOT EXISTS `passwordtokens` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `token` varchar(200) NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `used` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `FK_passwordtokens_users` (`user_id`),
+  CONSTRAINT `FK_passwordtokens_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+
 
 CREATE TABLE IF NOT EXISTS `courses` (
   `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -64,6 +68,8 @@ CREATE TABLE IF NOT EXISTS `articles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
 
 -----------------------------------------------
+
+npm install nodemon
 
 Após fazer o clone da pasta weKnow, executar o comando npm i
 

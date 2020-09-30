@@ -21,12 +21,12 @@
     <div class="filterBar">
       <div class="filters">
           <div class="field field1">
-            <label>Busca</label>
-            <input type="text">
+            
+            <input type="text" placeholder="Buscar">
           </div>
 
           <div class="field field2">
-            <label>Filtrar por:</label>
+           
             <select name="" id="">
               <option value="">All</option>
             </select>            
@@ -85,9 +85,9 @@ html, body, #app{
 }
 
 .logo{
-  background: #CCC8C8;
-  height: 115px;
-  padding: 25px;
+  background: #ffdd57;
+    height: 60px;
+    padding: 5px;
 }
 
 .menu ul{
@@ -114,7 +114,7 @@ html, body, #app{
     width: 80%;
     background: #E6E6E6;
     float: left;
-    height: 116px;
+    height: 60px;
     display: flex;
 }
 .filters{
@@ -156,7 +156,7 @@ input, select{
   justify-content: left;
   text-align: left;
   margin: 5px;
-  height: 70px;
+ 
 }
 
 .field1{
@@ -172,11 +172,11 @@ input, select{
 }
 
 .btn-filtrar{
-  background: #9499B9;
-  color: #ffffff;
-  padding: 11px;
-  border: none;
-  margin-top: 18px;
+    background: #ffdd57;
+    padding: 11px;
+    color: #000;
+    border: none;
+    margin-top:-5px;  
 }
 
 .p-nome{
