@@ -1,30 +1,45 @@
 <template>
-    <div>
-        <h2>Registro de usuário!</h2>    
-        <hr>
-
-        <div class="columns is-centered">
-            <div class="column is-half">
-                <div v-if="error != undefined">
-                    <div class="notification is-danger">
-                        {{error}}
+  
+    <div class="default">               
+                <div class="box-login">
+                    <h3><img src="../assets/WeKnow.png" alt="We Know"></h3>
+                    <h4>Registro de usuário!</h4> 
+                    <div v-if="error != undefined">
+                        <div class="notification is-danger">
+                            {{error}}
+                        </div>
                     </div>
+
+                    <label class="label-login">Nome</label>
+                    <input type="text" placeholder="Nome do usuário" class="input" v-model="name">
+
+
+                    <label class="label-login">E-mail</label>
+                    <input type="email" placeholder="email@email.com" class="input" v-model="email">
+
+                    <label class="label-login">Senha</label>
+                    <input type="password" placeholder="******" class="input" v-model="password">
+
+                    <label class="label-login">RA</label>
+                    <input type="text" placeholder="180000" class="input" v-model="ra">
+
+                    <label class="label-login">Curso</label>
+                    
+                    <div class="select">
+                    <select  v-model="course">
+                        <option value="1" selected>Engenharia da Computação</option>
+                    </select>
+                    </div>
+
+                    
+                    <button class="button is-success" @click="register">Cadastrar</button>
                 </div>
-                <p>Nome</p>
-                <input type="text" placeholder="Nome do usuário" class="input" v-model="name">
-                <p>E-mail</p>
-                <input type="email" placeholder="email@email.com" class="input" v-model="email">
-                <p>Senha</p>
-                <input type="password" placeholder="******" class="input" v-model="password">
-                <p>RA</p>
-                <input type="text" placeholder="ra" class="input" v-model="ra">
-                <p>Curso</p>
-                <input type="text" placeholder="digitar ex: 1" class="input" v-model="course">
-                <hr>
-                <button class="button is-success" @click="register">Cadastrar</button>
-            </div>
+            
         </div>
-    </div>    
+
+
+
+
 </template>
 
 <script>
@@ -61,5 +76,45 @@ export default {
 </script>
 
 <style scoped>
+body{
+    background: #CCC8C8 !important;
+}
 
+.default{
+    background: #CCC8C8;
+    min-height: 100%;
+    display: flex;
+}
+.box-login{
+    background: #ffffff;
+    border: 1px solid #ccc;
+    margin: auto;
+    width: 500px;
+    height: 600px;
+    padding: 20px 50px;
+    box-shadow: 3px 1px 13px 7px #ada8a8;
+}
+
+.label-login{
+    float: left;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 15px 0 5px 0;
+}
+
+button{
+    font-weight: 600;
+    margin: 25px 15px;
+    width: 40%;
+}
+
+.forgotKey a:link, .forgotKey a:visited{
+    color: #999999;
+    text-decoration: underline;
+}
+
+.select, select{
+    width: 100%;
+}
 </style>
