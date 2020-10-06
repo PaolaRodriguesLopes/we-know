@@ -140,7 +140,9 @@ class UserController{
 
             if(resultado){
 
-                var token = jwt.sign({ email: user.email, role: user.role }, secret);
+                var token = jwt.sign({ email: user.email, role: user.role }, secret, {
+                    expiresIn: 1800 // expires in 30 min
+                  });
 
                 res.status(200);
                 res.json({token: token});
