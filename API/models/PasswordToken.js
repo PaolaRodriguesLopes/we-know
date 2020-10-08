@@ -1,14 +1,13 @@
 var knex = require("../database/connection");
-var User = require("./User");
 
 class PasswordToken{
     async create(email){
-        var user = await User.findByEmail(email);
+        var user = await knex.select(["id","email","password","role","name"]).where({email:email}).table("users");
         if(user != undefined){
             try{
                 var token = Date.now();
                 await knex.insert({
-                    user_id: user.id,
+                    user_id: user[0].id,
                     used: 0,
                     token: token // UUID
                 }).table("passwordtokens");

@@ -1,5 +1,7 @@
 var User = require("../models/User");
 var jwt = require("jsonwebtoken");
+var PasswordToken = require("../models/PasswordToken")
+var send = require("../utils/EmailController")
 
 var secret = "Facens2020programacaoweb";
 var bcrypt = require("bcrypt");
@@ -105,7 +107,7 @@ class UserController{
         var email = req.body.email;
         var result = await PasswordToken.create(email);
         if(result.status){
-            //enviar email aqui
+            await send.sendEmail(email,result.token);
            res.status(200);
            //Convertendo para string
            res.send("" + result.token);
