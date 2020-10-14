@@ -1,21 +1,35 @@
 <template>
     <div>
-        <h2>Edição de usuário</h2>    
+        <h2 class="title">Edição de usuário</h2>    
         <hr>
 
-        <div class="columns is-centered">
-            <div class="column is-half">
+        <div class="columns is-centered content-edit">
+            <div class="is-2 box foto-perfil">
+                <img src="../assets/users.png" class="imageUser" alt="Placeholder image" width=150px>
+            </div>
+
+
+            <div class="column is-half box box-edit">
                 <div v-if="error != undefined">
                     <div class="notification is-danger">
                         {{error}}
                     </div>
                 </div>
-                <p>Nome</p>
+                
+                <label class="label-login">Nome</label>
                 <input type="text" placeholder="Nome do usuário" class="input" v-model="name">
-                <p>E-mail</p>
+                
+                <label class="label-login">Email</label>
                 <input type="email" placeholder="email@email.com" class="input" v-model="email">
                 <hr>
-                <button class="button is-success" @click="update">Editar</button>
+                
+                <div class="btns">
+                <router-link :to="{name: 'Users'}"><button class="button is-outlined">Voltar para usuários</button></router-link> &nbsp;
+                <button class="button is-success" @click="update">Salvar Edição</button>
+
+
+                
+                </div>
             </div>
         </div>
     </div>    
@@ -81,5 +95,58 @@ export default {
 </script>
 
 <style scoped>
+.title{
+    background: #713a3a;
+    color: #ffffff;
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 0 ;
+}
+
+
+.label-login{
+    float: left;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 15px 0 5px 0;
+}
+
+input{
+    margin-bottom: 10px;
+}
+
+.btns{
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-edit{
+padding: 25px;
+background: #dddddd;
+margin-bottom: 0;
+}
+
+.box-edit hr{
+    background-color:#cccccc;
+    border: none;
+    display: block;
+    height: 2px;
+   
+}
+
+.foto-perfil{
+    background:#375269;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0 !important;
+    
+}
+
+.content-edit{
+    margin-top: 60px;
+}
 
 </style>
