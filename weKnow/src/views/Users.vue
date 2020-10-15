@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr v-for="user in users" :key="user.id">
-                <td>{{user.name}}</td>
+                <td class="nameItem">{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{ user.role | processRole }}</td>
                 <td>
@@ -112,9 +112,11 @@ export default {
     filters: {
         processRole: function(value){
             if(value == 0){
-                return "Usuário comum";
+                return "Usuário Comum";
             }else if(value == 1){
-                return "Admin"
+                return "Administrador"
+            }else if(value == 2){
+                return "Professor(a)"
             }
         }
     }
@@ -122,8 +124,8 @@ export default {
 </script>
 
 <style scoped>
-td{
-text-transform:lowercase;
+.nameItem{
+text-transform:capitalize;
 
 }
 .title{

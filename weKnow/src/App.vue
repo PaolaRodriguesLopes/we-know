@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="menuDefault">
+    <div class="menuDefault" >
       <div class="logo"><img src="./assets/WeKnow.png" border=0 alt="weknow"></div>
       <nav class="menu">
         <ul>
@@ -18,7 +18,7 @@
         </ul>
       </nav>
     </div>
-    <div class="filterBar">
+    <div class="filterBar" >
       <div class="filters">
           <div class="field field1">
             
@@ -50,7 +50,38 @@
   </div>
 </template>
 
+
+<script>
+ /*created(){
+ 
+        var req = {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        }
+
+        axios.get("http://localhost:8686/user/" + this.$route.params.id, req).then(res => {
+            console.log(res);
+
+            this.name = res.data.name;
+            this.email = res.data.email;
+            this.id = res.data.id;
+
+        }).catch(err => {
+            console.log(err.response);
+             this.$router.push({name: 'Users'});
+        })
+
+    };*/
+
+</script>
+
+
 <style>
+
+
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

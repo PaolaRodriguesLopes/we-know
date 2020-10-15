@@ -14,9 +14,9 @@
                     <label class="label-login">Senha</label>
                     <input type="password" placeholder="******" class="input" v-model="password">
                     
-                    <button class="button is-primary" >CADASTRAR</button>
+                    <router-link :to="{name: 'Register'}"><button class="button is-primary" >CADASTRAR</button></router-link>
                     <button class="button is-link" @click="login">ENTRAR</button>
-                    <p class="forgotKey"><a href="#">Esqueci minha senha</a></p>
+                    <router-link :to="{name: 'ForgotPassword'}"><p class="forgotKey"><a href="#">Esqueci minha senha</a></p></router-link>
                 </div>
             
         </div>
