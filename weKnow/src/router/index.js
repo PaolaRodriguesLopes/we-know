@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import Users from '../views/Users.vue'
 import axios from 'axios';
 import Edit from '../views/Edit.vue'
+import RecoverPassword from '../views/RecoverPassword'
 
 
 
@@ -54,6 +55,11 @@ Vue.use(VueRouter)
     name: 'Users',
     component: Users,
     beforeEnter: AdminAuth
+  },
+  {
+    path: '/recoverpassword',
+    name: 'RecoverPassword',
+    component: RecoverPassword,
   },
   {
     path: '/admin/users/edit/:id',

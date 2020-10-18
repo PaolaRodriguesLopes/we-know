@@ -4,19 +4,22 @@
         <div class="default">               
                 <div class="box-login">
                     <h3><img src="../assets/WeKnow.png" alt="We Know"></h3>
-                    <div v-if="error != undefined">
-                        <div class="notification is-danger">
-                            {{error}}
-                        </div>
-                    </div>
+                    
                     <label class="label-login">E-mail</label>
                     <input type="email" placeholder="email@email.com" class="input" v-model="email">
                     <label class="label-login">Senha</label>
                     <input type="password" placeholder="******" class="input" v-model="password">
                     
+
+                    <div v-if="error != undefined">
+                        <div class="notification is-danger">
+                            {{error}}
+                        </div>
+                    </div>
+
                     <router-link :to="{name: 'Register'}"><button class="button is-primary" >CADASTRAR</button></router-link>
                     <button class="button is-link" @click="login">ENTRAR</button>
-                    <router-link :to="{name: 'ForgotPassword'}"><p class="forgotKey"><a href="#">Esqueci minha senha</a></p></router-link>
+                    <router-link :to="{name: 'RecoverPassword'}"><p class="forgotKey"><a>Esqueci minha senha</a></p></router-link>
                 </div>
             
         </div>
