@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="menuDefault" >
+    <div class="menuDefault" v-if="authenticated">
       <div class="logo"><img src="./assets/WeKnow.png" border=0 alt="weknow"></div>
       <nav class="menu">
         <ul>
@@ -18,7 +18,7 @@
         </ul>
       </nav>
     </div>
-    <div class="filterBar" >
+    <div class="filterBar" v-if="authenticated" >
       <div class="filters">
           <div class="field field1">
             
@@ -38,7 +38,7 @@
       </div>
 
       <div class="profile">
-        <p>Seja bem-vindo, <span class="p-nome">Fernando</span><br>
+        <p>Seja bem-vindo(a), <span class="p-nome">{{fullName}}</span><br>
         <a href="#">Editar Perfil</a> - <a href="#">Sair</a>        
         </p>
       </div>
@@ -52,27 +52,84 @@
 
 
 <script>
- /*created(){
- 
+ import axios from 'axios';
+export default {
+    created(){
+
         var req = {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('token')
             }
         }
 
-        axios.get("http://localhost:8686/user/" + this.$route.params.id, req).then(res => {
-            console.log(res);
+        axios.get("http://localhost:8686/user",req).then(res => {
+            //console.log(">>"+res.request);
+            if(res.request.status == 200){
+              this.authenticated = true;
+            }else{
+              this.authenticated = false;
+            }
 
-            this.name = res.data.name;
-            this.email = res.data.email;
-            this.id = res.data.id;
+            this.users = res.data;
 
+            this.responseUser = (res.request.response.replace("[","").replace("]",""));
+            this.responseUser = JSON.parse(this.responseUser);
+            this.fullName =   this.responseUser.name;
         }).catch(err => {
-            console.log(err.response);
-             this.$router.push({name: 'Users'});
+            console.log(err);
         })
+        
+    },
+    data()
+    {
+        return {
+            users: [],
+            showModal: false,
+            deleteUserId: -1,
+            authenticated: false,
+            responseUser: {},
+            fullName: ""
 
-    };*/
+        }
+    },
+    methods: {
+        hideModal(){
+            this.showModal = false;
+        },
+        showModalUser(id){
+            this.deleteUserId = id;
+            this.showModal = true;
+        },
+        deleteUser(){
+
+            var req = {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('token')
+                }
+            }
+
+            axios.delete("http://localhost:8686/user/"+this.deleteUserId, req).then(res => {
+                console.log(res);
+                this.showModal = false;
+                this.users = this.users.filter(u => u.id != this.deleteUserId);
+            }).catch(err => {
+                console.log(err);
+                this.showModal = false;
+            });
+        }
+    },
+    filters: {
+        processRole: function(value){
+            if(value == 0){
+                return "Usuário Comum";
+            }else if(value == 1){
+                return "Administrador"
+            }else if(value == 2){
+                return "Professor(a)"
+            }
+        }
+    }
+}
 
 </script>
 
