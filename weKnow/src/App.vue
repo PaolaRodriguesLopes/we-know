@@ -39,7 +39,7 @@
 
       <div class="profile">
         <p>Seja bem-vindo(a), <span class="p-nome">{{fullName}}</span><br>
-        <a href="#">Editar Perfil</a> - <a href="#">Sair</a>        
+        <a href="#">Editar Perfil</a> - <a @click="logout" href="">Sair</a>        
         </p>
       </div>
 
@@ -116,7 +116,13 @@ export default {
                 console.log(err);
                 this.showModal = false;
             });
+        },
+        logout(){
+          //alert("sair");
+          localStorage.setItem('token',"");
+          this.$router.replace("login");
         }
+
     },
     filters: {
         processRole: function(value){
