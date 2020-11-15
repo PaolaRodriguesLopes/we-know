@@ -2,6 +2,34 @@
     <div>
         <h1 class="title">Painel Administrador de Usuários</h1>
 
+        <div class="box-add-user">
+            
+            <input type="text" name="name" id="name" placeholder="Nome Completo">
+
+            
+            <input type="email" name="email" id="email" placeholder="Email">
+
+            
+            <select name="cargo" id="">
+                
+                <option value="0">
+                    User
+                </option>
+                
+                <option value="1">
+                    Administrador
+                </option>
+
+                <option value="2">
+                    Professor
+                </option>
+            </select>
+
+            <button class="addUser" id="addUser">Adicionar Usuário</button>
+
+
+        </div>
+
         <table class="table is-bordered is-fullwidth is-striped">
         <thead>
             <tr>
@@ -201,5 +229,31 @@ position: relative;
 margin-left: 28px;
 
 }
+
+.box-add-user{
+    background: #671313;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-add-user input, .box-add-user select{
+    width: 26%;
+}
+
+.addUser{
+    width: 15%;
+}
+
+.title{
+    margin-bottom: 0;
+}
+
+
+
+
+
+
+
 
 </style>
