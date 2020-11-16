@@ -28,7 +28,7 @@ router.post("/validate",AdminAuth,HomeController.validate);
 
 // Course routes
 router.post('/course',AdminAuth,CourseController.create);
-router.get("/course",AdminAuth,CourseController.getCourses);
+router.get("/course",CourseController.getCourses);
 router.get("/course/:id",AdminAuth,CourseController.getCourseByID);
 router.put("/course",AdminAuth,CourseController.edit);
 router.delete("/course/:id",AdminAuth,CourseController.remove);

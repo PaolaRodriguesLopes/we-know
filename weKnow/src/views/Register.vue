@@ -21,13 +21,14 @@
                     <input type="password" placeholder="******" class="input" v-model="password">
 
                     <label class="label-login">RA</label>
-                    <input type="text" placeholder="180000" class="input" v-model="ra">
+                    <input type="text" placeholder="180000" class="input" maxlength="6" v-model="ra">
 
                     <label class="label-login">Curso</label>
                     
                     <div class="select">
-                    <select  v-model="course">
-                        <option value="1" selected>Engenharia da Computação</option>
+                    <select >
+                        <option value="0" selected>Selecione um Curso</option>
+                        <option v-for="c in getCourses" :key="c.id" :value="c.id">{{c.description}}</option>
                     </select>
                     </div>
 
@@ -45,6 +46,13 @@
 <script>
 import axios from 'axios';
 export default {
+    created(){
+        axios.get("http://localhost:8686/course").then(res => {
+            this.getCourses = res.data;
+        }).catch(err => {
+            console.log(err);
+        })
+    },
     data(){
         return {
             name: '',
@@ -53,6 +61,7 @@ export default {
             ra: '',
             course: '',
             error: undefined,
+            getCourses: '',
         }
     },
     methods: {
@@ -70,7 +79,12 @@ export default {
                 var msgErro = err.response.data.err;
                 this.error = msgErro;
             })
-        }
+        },
+
+
+
+
+
     }
 }
 </script>

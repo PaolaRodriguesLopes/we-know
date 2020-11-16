@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="menuDefault">
+    <div class="menuDefault" v-if="authenticated">
       <div class="logo">
         <img src="./assets/WeKnow.png" border="0" alt="weknow" />
       </div>
