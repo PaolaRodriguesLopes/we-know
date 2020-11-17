@@ -26,7 +26,7 @@
                     <label class="label-login">Curso</label>
                     
                     <div class="select">
-                    <select >
+                    <select v-model="course" required>
                         <option value="0" selected>Selecione um Curso</option>
                         <option v-for="c in getCourses" :key="c.id" :value="c.id">{{c.description}}</option>
                     </select>
@@ -59,7 +59,7 @@ export default {
             password: '',
             email: '',
             ra: '',
-            course: '',
+            course: '0',
             error: undefined,
             getCourses: '',
         }

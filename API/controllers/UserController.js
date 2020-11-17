@@ -47,6 +47,15 @@ class UserController{
             return;
         }
 
+        if (course == '0'){
+            res.status(400);
+            res.json({err: "Você precisa selecionar um curso"});
+            return;
+        }
+
+
+
+
         var emailExists = await User.findEmail(email);
         var raExists = await User.findRA(ra);
 
@@ -69,6 +78,7 @@ class UserController{
         await User.new(email,password,name,course,ra);
 
         res.status(200);
+        
         res.send("Tudo ok!");
     }
 
