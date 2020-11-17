@@ -11,7 +11,7 @@ import RecoverPassword from '../views/RecoverPassword';
 import Articles from '../views/Articles.vue';
 import ArticleDetails from '../views/ArticleDetails.vue';
 import ArticleInsertUpdate from '../views/ArticleInsertUpdate.vue';
-
+import Categories from '../views/Categories.vue';
 
 
 function AdminAuth(to, from, next){
@@ -71,30 +71,21 @@ Vue.use(VueRouter)
     name: 'UserEdit',
     component: Edit,
     beforeEnter: AdminAuth
-  },
-  {
-    path: '/admin/articles',
-    name: 'Articles',
-    component: Articles,
-    beforeEnter: AdminAuth
-  },
-  {
-    path: '/new-article',
-    name: 'InsertArticle',
-    component: ArticleInsertUpdate,
-    beforeEnter: AdminAuth
-  },
-  {
-    path: '/admin/articles/edit/:id',
-    name: 'UpdateArticle',
-    component: ArticleInsertUpdate,
-    beforeEnter: AdminAuth
-  },
-  {
-    path: '/admin/articles/details/:id',
-    name: 'ArticleDetails',
-    component: ArticleDetails
-  },
+    },
+  
+  // Article
+  { path: '/admin/articles', name: 'Articles', component: Articles, beforeEnter: AdminAuth },
+  { path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
+  { path: '/admin/articles/edit/:id', name: 'UpdateArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
+  { path: '/admin/articles/details/:id', name: 'ArticleDetails', component: ArticleDetails },
+  
+  // Category
+  { path: '/admin/categories', name: 'Categories', component: Categories, beforeEnter: AdminAuth },
+  //{ path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
+  //{ path: '/admin/articles/edit/:id', name: 'UpdateArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
+  //{ path: '/admin/articles/details/:id', name: 'ArticleDetails', component: ArticleDetails },
+  
+
   {
     
     path: '/about',

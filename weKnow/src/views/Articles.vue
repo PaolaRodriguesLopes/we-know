@@ -6,49 +6,55 @@
             </h1>
         </header>
 
-        <table class="table is-bordered is-fullwidth is-stripped">
-            <thead>
-                <tr>
-                    <th> Título  </th>
-                    <th> Descrição </th>
-                    <th> Status </th>
-                    <th> Última alteração </th>
-                    <th> Ações </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="article in articles" :key="article.id">
-                    <td> {{ article.title }} </td>
-                    <td> {{ article.description }} </td>
-                    <td> {{ article.status_article | processArticleStatus }} </td>
-                    <td> {{ article.last_changed | formatDatetime }} </td>
-                    <td>  
-                        <router-link :to="{ name: 'ArticleDetails', params: { id: article.id }}">
-                            <button type="button" class="button is-light"> 
-                                Detalhes 
-                            </button>
-                        </router-link>
-                        <router-link :to="{ name: 'UpdateArticle', params: { id: article.id }}">
-                            <button type="button" class="button is-success"> 
-                                Editar 
-                            </button>
-                        </router-link>
-                        <br>
-                        <button type="button" class="button is-danger" @click="showModalArticle(article.id);">
-                            Deletar
-                        </button>
-                        <button type="button" class="button is-success is-light" @click="updateStatus (article.id, 1);"
-                                v-if="article.status_article === 0">
-                            Aprovar
-                        </button>
-                        <button type="button" class="button is-danger is-light" @click="updateStatus (article.id, 2);" 
-                                v-if="article.status_article === 0">
-                            Rejeitar
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="box mx-3">
+            <div class="table-container">
+                <table class="table is-bordered is-fullwidth is-stripped">
+                    <thead>
+                        <tr>
+                            <th> Título  </th>
+                            <th> Descrição </th>
+                            <th> Status </th>
+                            <th> Última alteração </th>
+                            <th> Ações </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="article in articles" :key="article.id">
+                            <td> {{ article.title }} </td>
+                            <td> {{ article.description }} </td>
+                            <td> {{ article.status_article | processArticleStatus }} </td>
+                            <td> {{ article.last_changed | formatDatetime }} </td>
+                            <td>  
+                                <router-link :to="{ name: 'ArticleDetails', params: { id: article.id }}">
+                                    <button type="button" class="button is-light"> 
+                                        Detalhes 
+                                    </button>
+                                </router-link>
+                                <router-link :to="{ name: 'UpdateArticle', params: { id: article.id }}">
+                                    <button type="button" class="button is-success"> 
+                                        Editar 
+                                    </button>
+                                </router-link>
+                                <br>
+                                <button type="button" class="button is-danger" @click="showModalArticle(article.id);">
+                                    Deletar
+                                </button>
+                                <button type="button" class="button is-success is-light" @click="updateStatus (article.id, 1);"
+                                        v-if="article.status_article === 0">
+                                    Aprovar
+                                </button>
+                                <button type="button" class="button is-danger is-light" @click="updateStatus (article.id, 2);" 
+                                        v-if="article.status_article === 0">
+                                    Rejeitar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
 
         <!-- delete modal -->
         <div :class="{modal: true, 'is-active': showModal}">

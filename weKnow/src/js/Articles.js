@@ -11,7 +11,11 @@ export default {
         return {
             articles: [],
             showModal: false,
-            deleteArticleId: -1
+            deleteArticleId: -1,
+            searchQuery: '',
+            searchCriteria: 'All',
+            criteria: ['Title', 'Description', 'Status'],
+            statusValues: ['Approved', 'Rejected', 'Waiting Approving']
         }
     },
 
