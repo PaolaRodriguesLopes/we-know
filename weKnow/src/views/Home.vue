@@ -11,6 +11,14 @@
         <span class="author">Author: </span>{{ article.author }} Category:
         {{ article.category }}
       </p>
+
+      <router-link :to="{ name: 'ArticleDetails', params: { id: article.id }}">
+        <button type="button" class="button is-light">
+          Detalhes
+        </button>
+      </router-link>
+
+      
     </div>
   </div>
 </template>
@@ -32,7 +40,7 @@ export default {
     return {
       articles: [],
     };
-  },
+  }
 };
 </script>
 

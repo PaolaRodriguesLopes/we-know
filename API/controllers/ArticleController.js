@@ -1,3 +1,4 @@
+const { log } = require("handlebars");
 var Article = require("../models/Article");
 
 
@@ -79,9 +80,10 @@ class ArticleController{
     }
 
     async editStatus(req, res){
-        var {id, status_article} = req.body;
+        var { id, status_article } = req.body;
         var result = await Article.updateStatus(id, status_article);
-        if(result != undefined){
+        if (result != undefined) {
+            console.log('result', result);
             if(result.status){
                 res.status(200);
                 res.send("Tudo OK!");
