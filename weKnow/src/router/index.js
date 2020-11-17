@@ -1,12 +1,16 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Register from '../views/Register.vue'
-import Login from '../views/Login.vue'
-import Users from '../views/Users.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 import axios from 'axios';
-import Edit from '../views/Edit.vue'
-import RecoverPassword from '../views/RecoverPassword'
+
+import Home from '../views/Home.vue';
+import Register from '../views/Register.vue';
+import Login from '../views/Login.vue';
+import Users from '../views/Users.vue';
+import Edit from '../views/Edit.vue';
+import RecoverPassword from '../views/RecoverPassword';
+import Articles from '../views/Articles.vue';
+import ArticleDetails from '../views/ArticleDetails.vue';
+import ArticleInsertUpdate from '../views/ArticleInsertUpdate.vue';
 
 
 
@@ -67,6 +71,29 @@ Vue.use(VueRouter)
     name: 'UserEdit',
     component: Edit,
     beforeEnter: AdminAuth
+  },
+  {
+    path: '/admin/articles',
+    name: 'Articles',
+    component: Articles,
+    beforeEnter: AdminAuth
+  },
+  {
+    path: '/new-article',
+    name: 'InsertArticle',
+    component: ArticleInsertUpdate,
+    beforeEnter: AdminAuth
+  },
+  {
+    path: '/admin/articles/edit/:id',
+    name: 'UpdateArticle',
+    component: ArticleInsertUpdate,
+    beforeEnter: AdminAuth
+  },
+  {
+    path: '/admin/articles/details/:id',
+    name: 'ArticleDetails',
+    component: ArticleDetails
   },
   {
     

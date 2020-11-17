@@ -1,0 +1,75 @@
+
+/* || Header */
+
+.title {
+    background: #713a3a !important;
+    color: #ffffff !important;
+    padding: 10px !important;
+    font-size: 20px !important;
+    margin-bottom: 0 !important;
+}
+
+/* || Table */
+
+thead {
+    background: #cccccc;
+}
+
+/* || Confirm Delete Modal */
+
+.btn-cancelar {
+    background: #cccccc;
+    color: #333333;
+}
+
+.btn-cancelar:hover {
+    background: #9b9b9b;
+    color: #333333;
+}
+
+.btn-deletar {
+  background: rgb(122, 32, 32);
+  color: #fff;
+}
+
+.btn-deletar:hover {
+  background: rgb(59, 6, 6);
+  color: #fff;
+}
+
+.card-header-title {
+  justify-content: center;
+  background: #000000;
+  color: #ffffff;
+}
+
+.message-excluir {
+  display: flex;
+  justify-content: center;
+}
+
+.message-excluir p::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  position: absolute;
+  top: 60px;
+  left: -20px;
+  border-radius: 30px;
+  border: 1px solid #eeeeee;
+  box-shadow: 1px 5px 5px #cccccc;
+}
+
+.message-excluir p {
+  width: 250px;
+  border: 1px solid #eeeeee;
+  box-shadow: 1px 5px 5px #cccccc;
+  border-radius: 30px;
+  padding: 10px;
+  height: 80px;
+  position: relative;
+  margin-left: 28px;
+}
+
