@@ -15,6 +15,7 @@ import ArticleDetails from '../views/ArticleDetails.vue';
 import ArticleInsertUpdate from '../views/ArticleInsertUpdate.vue';
 import Categories from '../views/Categories.vue';
 import Subjects from '../views/Subjects.vue';
+import Courses from '../views/Courses.vue';
 
 function AdminAuth(to, from, next) {
   const loginUrl = '/login';
@@ -76,6 +77,9 @@ const routes = [
   
   // Subjects
   { path: '/admin/subjects', name: 'Subjects', component: Subjects, beforeEnter: AdminAuth },
+  
+  // Courses
+  { path: '/admin/courses', name: 'Courses', component: Courses, beforeEnter: AdminAuth },
 
   {
     
