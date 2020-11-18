@@ -18,6 +18,11 @@ class UserServices {
         return await axios.get(this.baseUrl, request);
     }
 
+    async findByEmail(email) {
+        const request = Helpers.getRequestWithHeader();
+        const url = `${this.baseUrl}/email?value=${email}`;
+        return await axios.get(url, request);
+    }
 }
 
 module.exports = new UserServices();

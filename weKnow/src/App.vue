@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <div class="menuDefault" v-if="authenticated">
+    <div class="menuDefault" v-if="!hideBars">
       <div class="logo">
         <img src="./assets/WeKnow.png" border="0" alt="weknow" />
       </div>
       <nav class="menu">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Meus Artigos</a></li>
-          <li><a href="#">Novo Artigo</a></li>
+          <li>
+            <router-link :to="{ name: 'Home' }"> 
+              Home 
+            </router-link>
+          </li>
+          <li v-if="sessionUser">
+            <a href="#" @click="redirectToArticles()"> 
+              Meus Artigos 
+            </a>
+          </li>
+          <li v-if="sessionUser">
+            <router-link :to="{ name: 'InsertArticle' }"> 
+              Novo Artigo 
+            </router-link>
+          </li>
           <li><a href="#">Ajuda</a></li>
           <hr />
-          <li><a href="#">Últimos Artigos</a></li>
+          <li>
+            <router-link :to="{ name: 'Home' }"> 
+              Últimos Artigos 
+            </router-link>
+          </li>
           <li><a href="#">Engenharia Computação</a></li>
           <li><a href="#">Engenharia Elétrica</a></li>
           <li><a href="#">Engenharia Produção</a></li>
@@ -20,7 +36,7 @@
         </ul>
       </nav>
     </div>
-    <div class="filterBar" v-if="authenticated" >
+    <div class="filterBar" v-if="!hideBars">
       <div class="filters">
         <div class="field field1">
           <input type="text" placeholder="Buscar" />
@@ -37,9 +53,9 @@
         </div>
       </div>
 
-      <div class="profile">
-        <p>Seja bem-vindo(a), <span class="p-nome">{{fullName}}</span><br>
-        <a href="#">Editar Perfil</a> - <a @click="logout" href="">Sair</a>        
+      <div class="profile" v-if="isAuthenticated">
+        <p> Seja bem-vindo(a), <span class="p-nome"> {{fullName}} </span><br>
+        <a href="#"> Editar Perfil </a> - <a @click="logout" href=""> Sair </a>        
         </p>
       </div>
     </div>
@@ -49,47 +65,61 @@
 
 
 <script>
- import axios from 'axios';
-export default {
-    created(){
+  import axios from 'axios';
+  import Helpers from './js/others/Helpers';
+  import config from './js/others/Config';
+  export default {
 
-        var req = {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('token')
-            }
-        }
+      created() {
+        this.checkIfIsToHideBars();
+        this.storeLoggedUser();
+        this.getUserData();
+      },
+      data() {
+          return {
+              users: [],
+              showModal: false,
+              deleteUserId: -1,
+              isAuthenticated: false,
+              responseUser: {},
+              fullName: '',
+              sessionUser: undefined,
+              hideBars: false
+          }
+      },
+      methods: {
+        checkIfIsToHideBars() {
+          const pathname = location.pathname;
+          console.log('pathname', pathname);
+          this.hideBars = (pathname === '/login' || pathname === '/register' || pathname === '/recoverpassword');
+        },
+        storeLoggedUser() {
+          let sessionUser = localStorage.getItem('sessionUser');
+          if (sessionUser !== undefined) {
+            sessionUser = JSON.parse(sessionUser);
+            this.sessionUser = sessionUser;
+          }
+        },
+        getUserData() {
+          if (this.sessionUser) {
+            const request = Helpers.getRequestWithHeader();
+            const url = `${config.API_URL}/user`;
+            axios.get(url, request).then(response => {
+              this.isAuthenticated = (response.request.status == 200);
+              this.users = response.data;
+              this.responseUser = (response.request.response.replace("[","").replace("]",""));
+              this.responseUser = JSON.parse(this.responseUser);
+              this.fullName = this.responseUser.name;
+            }).catch (error => {
+              console.log(error);
+              this.isAuthenticated = false;
+              this.users = [];
+              this.responseUser = {};
+              this.fullName = '';
+            });
+          }
+        },
 
-        axios.get("http://localhost:8686/user",req).then(res => {
-            //console.log(">>"+res.request);
-            if(res.request.status == 200){
-              this.authenticated = true;
-            }else{
-              this.authenticated = false;
-            }
-
-            this.users = res.data;
-
-            this.responseUser = (res.request.response.replace("[","").replace("]",""));
-            this.responseUser = JSON.parse(this.responseUser);
-            this.fullName =   this.responseUser.name;
-        }).catch(err => {
-            console.log(err);
-        })
-        
-    },
-    data()
-    {
-        return {
-            users: [],
-            showModal: false,
-            deleteUserId: -1,
-            authenticated: false,
-            responseUser: {},
-            fullName: ""
-
-        }
-    },
-    methods: {
         hideModal(){
             this.showModal = false;
         },
@@ -97,43 +127,45 @@ export default {
             this.deleteUserId = id;
             this.showModal = true;
         },
-        deleteUser(){
 
-            var req = {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem('token')
-                }
-            }
+        deleteUser() {
 
-            axios.delete("http://localhost:8686/user/"+this.deleteUserId, req).then(res => {
-                console.log(res);
-                this.showModal = false;
-                this.users = this.users.filter(u => u.id != this.deleteUserId);
-            }).catch(err => {
-                console.log(err);
-                this.showModal = false;
-            });
+          const request = Helpers.getRequestWithHeader();
+          const url = `${config.API_URL}/user/${this.deleteUserId}`;
+          axios.delete(url, request).then(response => {
+            console.log(response);
+            this.showModal = false;
+            this.users = this.users.filter(u => u.id != this.deleteUserId);
+          }).catch (error => {
+              console.log(error);
+              this.showModal = false;
+          });
         },
         logout(){
-          //alert("sair");
-          localStorage.setItem('token',"");
-          this.$router.replace("login");
+          localStorage.setItem ('token', null);
+          this.$router.replace ('login');
+        },
+        redirectToArticles() {
+          console.log('this.sessionUser', this.sessionUser);
+          const params = { id: this.sessionUser.id };
+          console.log('params', params);
+          this.$router.push({ 
+            name: 'Articles', params
+          });
         }
-
-    },
-    filters: {
-        processRole: function(value){
-            if(value == 0){
-                return "Usuário Comum";
-            }else if(value == 1){
-                return "Administrador"
-            }else if(value == 2){
-                return "Professor(a)"
-            }
-        }
-    }
-}
-
+      },
+      filters: {
+          processRole: function(value){
+              if(value == 0){
+                  return "Usuário Comum";
+              }else if(value == 1){
+                  return "Administrador"
+              }else if(value == 2){
+                  return "Professor(a)"
+              }
+          }
+      }
+  }
 </script>
 
 

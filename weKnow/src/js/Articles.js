@@ -4,7 +4,13 @@ import ArticleServices from './services/ArticleServices';
 export default {
 
     created() {
-        this.findAll();
+        const params = this.$router.params;
+        if (params !== undefined &&  params.id !== undefined) {
+            //
+        }
+        else {
+            this.findAll();
+        }
     },
 
     data() {
@@ -28,6 +34,11 @@ export default {
                 console.log('error get article', error);
                 this.articles = [];
             });
+        },
+
+        findByAuthors() {
+            // TODO!
+            console.log('aaa');
         },
 
         hideModal() {

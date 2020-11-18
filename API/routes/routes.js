@@ -15,6 +15,7 @@ const { remove } = require("../controllers/UserController");
 //User routes
 router.get('/', HomeController.index);
 router.post('/user', UserController.create);
+router.get('/user/email', UserController.findUserByEmail);
 router.get("/user",AdminAuth,UserController.index);
 router.get("/user/:id",AdminAuth,UserController.findUser);
 router.put("/user",AdminAuth,UserController.edit);

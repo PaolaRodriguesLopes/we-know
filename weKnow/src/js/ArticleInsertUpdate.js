@@ -7,7 +7,7 @@ export default {
 
     created() {
         const currentId = this.$route.params.id;
-        this.headerTitle = (currentId ? 'Atualizar' : 'Inserir');
+        this.headerTitle = (currentId ? 'Atualizar' : 'Novo');
         if (currentId) {
             this.id = currentId;
             ArticleServices.getById(currentId).then(response => { 
