@@ -7,15 +7,20 @@ class Article{
 
     constructor() {
         this.allColumns = [
-            "id", "title", "description", "text", "category",
-            "author", "subject", "published_date", "last_changed", "status_article",
-            "comments"
+            "articles.id", "articles.title", "articles.description", "articles.text", "categories.description as category",
+            "users.name as author", "subjects.description as subject", "articles.published_date", "articles.last_changed", "articles.status_article",
+            "articles.comments"
         ];
     }
 
     async findAll(){
         try{
-            var result = await knex.select(this.allColumns).table("articles");
+            var result = await knex('articles')
+            .join('categories', 'articles.category', 'categories.id')
+            .join('users', 'articles.author', 'users.id')
+            .join('subjects', 'articles.subject', 'subjects.id')
+            .select(this.allColumns);
+
             return result;
         }catch(err){
             console.log(err);
@@ -32,7 +37,7 @@ class Article{
                 const table = criteria[0];
                 const key = criteria[1];
                 const column = criteria[2];
-                console.log('findByValueAndCriteria -- ', 'table', table, 'column', column, 'value', value);
+
                 result = await knex.select('articles.*').from('articles')
                                    .leftJoin(table, `articles.${key}`, `${table}.id`)
                                    .where(`${table}.${column}`, 'like', `%${value}%`);
@@ -54,7 +59,11 @@ class Article{
 
     async findById(id){
         try{
-            var result = await knex.select(this.allColumns).where({id:id}).table("articles");
+            var result = await knex('articles')
+            .join('categories', 'articles.category', 'categories.id')
+            .join('users', 'articles.author', 'users.id')
+            .join('subjects', 'articles.subject', 'subjects.id')
+            .select(this.allColumns).where('articles.id',id);
             
             if(result.length > 0){
                 return result[0];
