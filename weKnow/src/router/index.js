@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
 
+import Helpers from '../js/others/Helpers';
+
 import Home from '../views/Home.vue';
 import Register from '../views/Register.vue';
 import Login from '../views/Login.vue';
@@ -12,7 +14,7 @@ import Articles from '../views/Articles.vue';
 import ArticleDetails from '../views/ArticleDetails.vue';
 import ArticleInsertUpdate from '../views/ArticleInsertUpdate.vue';
 import Categories from '../views/Categories.vue';
-import Helpers from '../js/others/Helpers';
+import Subjects from '../views/Subjects.vue';
 
 function AdminAuth(to, from, next) {
   const loginUrl = '/login';
@@ -71,10 +73,9 @@ const routes = [
   
   // Category
   { path: '/admin/categories', name: 'Categories', component: Categories, beforeEnter: AdminAuth },
-  //{ path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
-  //{ path: '/admin/articles/edit/:id', name: 'UpdateArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
-  //{ path: '/admin/articles/details/:id', name: 'ArticleDetails', component: ArticleDetails },
   
+  // Subjects
+  { path: '/admin/subjects', name: 'Subjects', component: Subjects, beforeEnter: AdminAuth },
 
   {
     
