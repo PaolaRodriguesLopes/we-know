@@ -37,18 +37,9 @@
                     </option>
                 </select>
 
-                <!-- author -->
-                <label class="label-login" for="authorSelect"> Author </label>
-                <select id="authorSelect" class="input" v-model="author">
-                    <option value="0"> Escolha uma opção </option>
-                    <option v-for="user in users" :key="user.id" v-bind:value="user.id"> 
-                        {{ user.name }} 
-                    </option>
-                </select>
-
                 <!-- subject -->
-                <label class="label-login" for="subjectInput"> Sujeito </label>
-                <input type="text" id="subjectInput" class="input" placeholder="Sujeito" maxlength="10" v-model="subject">
+                <label class="label-login" for="subjectInput"> Matéria </label>
+                <input type="text" id="subjectInput" class="input" placeholder="Matéria" maxlength="10" v-model="subject">
 
                 <hr>
                 <div class="btns">

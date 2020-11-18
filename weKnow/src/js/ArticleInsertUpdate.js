@@ -1,4 +1,5 @@
 import Filters from './others/Filters';
+import { getSessionUser } from './others/Helpers';
 import ArticleServices from './services/ArticleServices';
 import CategoryServices from './services/CategoryServices';
 import UserServices from './services/UserServices';
@@ -6,7 +7,7 @@ import UserServices from './services/UserServices';
 export default {
 
     created() {
-        const currentId = this.$route.params.id;
+        const currentId = this.$router?.currentRoute?.params?.id || undefined;
         this.headerTitle = (currentId ? 'Atualizar' : 'Novo');
         if (currentId) {
             this.id = currentId;
@@ -26,7 +27,7 @@ export default {
                 }
             }).catch(error => { 
                 console.log('error get article', error);
-                this.$route.push({ name: 'Articles' });
+                this.$router.push({ name: 'Articles' });
             });
         }
 
@@ -80,6 +81,7 @@ export default {
             console.log('payload', payload);
 
             if (this.id === -1) {
+                payload.author = getSessionUser().id;
                 this.insert(payload);
             }
             else {
@@ -90,12 +92,32 @@ export default {
         insert(payload) {
             ArticleServices.insert(payload).then(response => { 
                 console.log('ArticleServices insert response', response);
+                if (response.data && response.data !== '') {
+                    alert('Novo artigo criado com sucesso!');
+                    this.$router.push({ name: 'Articles', params: { id: payload.author } });
+                }
+                else {
+                    alert('Erro ao inserir o novo artigo!');    
+                }
+            }).catch(error => { 
+                console.log('insert error', error);
+                alert('Erro ao inserir o novo artigo!');
             });
         },
 
         update(payload) {
             ArticleServices.update(payload).then(response => { 
-                console.log('ArticleServices updated response', response);
+                console.log('ArticleServices update response', response);
+                if (response.data && response.data !== '') {
+                    alert('Artigo atualizado com sucesso!');
+                    this.$router.push({ name: 'Articles', params: { id: payload.author } });
+                }
+                else {
+                    alert('Erro ao inserir o novo artigo!');    
+                }
+            }).catch(error => { 
+                console.log('update error', error);
+                alert('Erro ao atualizar o artigo!');
             });
         }
     },

@@ -73,7 +73,7 @@
       created() {
         this.checkIfIsToHideBars();
         this.storeLoggedUser();
-        this.getUserData();
+        // this.getUserData();
       },
       data() {
           return {
@@ -81,7 +81,6 @@
               showModal: false,
               deleteUserId: -1,
               isAuthenticated: false,
-              responseUser: {},
               fullName: '',
               sessionUser: undefined,
               hideBars: false
@@ -97,10 +96,17 @@
           let sessionUser = localStorage.getItem('sessionUser');
           if (sessionUser !== undefined) {
             sessionUser = JSON.parse(sessionUser);
+            this.isAuthenticated = true;
             this.sessionUser = sessionUser;
+            this.fullName = sessionUser.name;
+          }
+          else {
+            this.isAuthenticated = false;
+            this.sessionUser = undefined;
+            this.fullName = '';
           }
         },
-        getUserData() {
+        /*getUserData() {
           if (this.sessionUser) {
             const request = Helpers.getRequestWithHeader();
             const url = `${config.API_URL}/user`;
@@ -118,7 +124,7 @@
               this.fullName = '';
             });
           }
-        },
+        },*/
 
         hideModal(){
             this.showModal = false;

@@ -97,6 +97,24 @@ class ArticleController{
         }
     }
 
+    async editComments(request, response){
+        var { id, comments } = request.body;
+        var result = await Article.updateComments(id, comments);
+        if (result != undefined) {
+            console.log('result', result);
+            if(result.status){
+                response.status(200);
+                response.send("Tudo OK!");
+            }else{
+                response.status(406);
+                response.send(result.err)
+            }
+        }else{
+            response.status(406);
+            response.send("Ocorreu um erro no servidor!");
+        }
+    }
+
     async remove(req, res){
         var id = req.params.id;
 

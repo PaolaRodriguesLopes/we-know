@@ -41,6 +41,11 @@ class ArticleServices {
         return await axios.put(url, object, request);
     }
 
+    async updateComments(object) {
+        const request = Helpers.getRequestWithHeader();
+        const url = `${this.baseUrl}/comments`;
+        return await axios.put(url, object, request);
+    }
 }
 
 module.exports = new ArticleServices();
