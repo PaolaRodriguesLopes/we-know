@@ -22,7 +22,7 @@ export default {
             }
         }).catch(error => { 
             console.log('error get article', error);
-            this.$route.push({ name: 'Articles' });
+            this.$router.push({ name: 'Articles' });
         });
     },
 

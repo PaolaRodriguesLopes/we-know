@@ -12,6 +12,22 @@ class UserController{
         res.json(users);
     }
 
+    async findUserByEmail(request, response) {
+        console.log('request');
+        console.log(request);
+        const email = request.query.value;
+        const user = await User.findByEmail(email);
+
+        if (!user) {
+            response.status(404);
+            response.json({});
+        }
+        else {
+            response.status(200);
+            response.json(user);
+        }
+    }
+
     async findUser (req,res){
         var id = req.params.id;
         var user = await User.findById(id);
@@ -52,9 +68,6 @@ class UserController{
             res.json({err: "Você precisa selecionar um curso"});
             return;
         }
-
-
-
 
         var emailExists = await User.findEmail(email);
         var raExists = await User.findRA(ra);

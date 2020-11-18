@@ -49,6 +49,23 @@ class Filters {
         }
     }
 
+    static getTextColorFromArticleStatus(value) {
+        const baseClass = 'has-text-weight-bold	';
+        switch(value) {
+             case 0: default: {
+                return `${baseClass} has-text-info`;
+             }
+                 
+            case 1: {
+                return `${baseClass} has-text-success`;
+             }
+                 
+            case 2: {
+                return `${baseClass} has-text-danger`;
+             }
+         }
+     }
+
     static formatDatetime(value) {
         return moment(value).format('DD/MM/YYYY hh:mm');
     }

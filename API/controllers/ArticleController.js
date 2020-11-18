@@ -1,4 +1,3 @@
-const { log } = require("handlebars");
 var Article = require("../models/Article");
 
 
@@ -6,6 +5,13 @@ class ArticleController{
     async getArticles(req, res){
         var articles = await Article.findAll();
         res.json(articles);
+    }
+
+    async findByValueAndCriteria(request, response) {
+        let value = request.query.value;
+        let criteria = request.query.criteria;
+        const articles = await Article.findByValueAndCriteria(value, criteria);
+        response.json(articles);
     }
 
     async getArticleByID (req,res){
@@ -94,6 +100,24 @@ class ArticleController{
         }else{
             res.status(406);
             res.send("Ocorreu um erro no servidor!");
+        }
+    }
+
+    async editComments(request, response){
+        var { id, comments } = request.body;
+        var result = await Article.updateComments(id, comments);
+        if (result != undefined) {
+            console.log('result', result);
+            if(result.status){
+                response.status(200);
+                response.send("Tudo OK!");
+            }else{
+                response.status(406);
+                response.send(result.err)
+            }
+        }else{
+            response.status(406);
+            response.send("Ocorreu um erro no servidor!");
         }
     }
 

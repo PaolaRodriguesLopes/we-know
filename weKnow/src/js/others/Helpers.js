@@ -10,6 +10,15 @@ class Helpers {
 
         return request;
     }
+
+    static getSessionUser() {
+        let sessionUser = localStorage.getItem('sessionUser');
+        if (sessionUser) {
+            return JSON.parse(sessionUser);
+        }
+
+        return null;
+    }
 }
 
 module.exports = Helpers;

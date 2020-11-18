@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
 
+import Helpers from '../js/others/Helpers';
+
 import Home from '../views/Home.vue';
 import Register from '../views/Register.vue';
 import Login from '../views/Login.vue';
@@ -12,79 +14,78 @@ import Articles from '../views/Articles.vue';
 import ArticleDetails from '../views/ArticleDetails.vue';
 import ArticleInsertUpdate from '../views/ArticleInsertUpdate.vue';
 import Categories from '../views/Categories.vue';
+import Subjects from '../views/Subjects.vue';
+import Courses from '../views/Courses.vue';
 
+function AdminAuth(to, from, next) {
+  const loginUrl = '/login';
+  const token = localStorage.getItem('token');
+  if (token != undefined) {
+    const request = Helpers.getRequestWithHeader();
+    const url = 'http://localhost:8686/validate';
+    axios.post(url, {}, request).then ((response) => {
+        console.log(response);
+        next();
+    }).catch((error) => {
+        console.log(error.response);
+        next(loginUrl);
+      });
+  }
+  else {
+    next(loginUrl);
+  }
+}
 
-function AdminAuth(to, from, next){
-  if(localStorage.getItem('token') != undefined){
-
-    var req = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem('token')
-      }
-    }
-
-    axios.post("http://localhost:8686/validate",{},req).then(res => {
-      console.log(res);
+function LoginAuth(to, from, next) {
+  const homeUrl = '/home';
+  let sessionUser = localStorage.getItem('sessionUser');
+  if (sessionUser != undefined) {
+    sessionUser = JSON.parse(sessionUser);
+    if (sessionUser.role == 0 || sessionUser.role == 1 || sessionUser.role == 2) {
       next();
-    }).catch(err => {
-      console.log(err.response);
-      next("/login");
-    });
-  }else{
-    next("/login");
+    }
+    else {
+      next(homeUrl);
+    }
+  }
+  else {
+    next(homeUrl);
   }
 }
 
 
 Vue.use(VueRouter)
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    beforeEnter: AdminAuth
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/admin/users',
-    name: 'Users',
-    component: Users,
-    beforeEnter: AdminAuth
-  },
-  {
-    path: '/recoverpassword',
-    name: 'RecoverPassword',
-    component: RecoverPassword,
-  },
-  {
-    path: '/admin/users/edit/:id',
-    name: 'UserEdit',
-    component: Edit,
-    beforeEnter: AdminAuth
-    },
+// Surpress route exception
+/*const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+};*/
+
+const routes = [
+
+  // Users
+  { path: '/', name: 'Home', component: Home },
+  { path: '/register', name: 'Register', component: Register },
+  { path: '/login', name: 'Login', component: Login },
+  { path: '/admin/users', name: 'Users', component: Users, beforeEnter: AdminAuth },
+  { path: '/recoverpassword', name: 'RecoverPassword', component: RecoverPassword, },
+  { path: '/admin/users/edit/:id', name: 'UserEdit', component: Edit, beforeEnter: AdminAuth },
   
   // Article
-  { path: '/admin/articles', name: 'Articles', component: Articles, beforeEnter: AdminAuth },
-  { path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
-  { path: '/admin/articles/edit/:id', name: 'UpdateArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
-  { path: '/admin/articles/details/:id', name: 'ArticleDetails', component: ArticleDetails },
+  { path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: LoginAuth },
+  { path: '/articles', name: 'Articles', component: Articles, beforeEnter: LoginAuth },
+  { path: '/articles/edit/:id', name: 'UpdateArticle', component: ArticleInsertUpdate, beforeEnter: LoginAuth },
+  { path: '/articles/details/:id', name: 'ArticleDetails', component: ArticleDetails },
   
   // Category
   { path: '/admin/categories', name: 'Categories', component: Categories, beforeEnter: AdminAuth },
-  //{ path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
-  //{ path: '/admin/articles/edit/:id', name: 'UpdateArticle', component: ArticleInsertUpdate, beforeEnter: AdminAuth },
-  //{ path: '/admin/articles/details/:id', name: 'ArticleDetails', component: ArticleDetails },
   
+  // Subjects
+  { path: '/admin/subjects', name: 'Subjects', component: Subjects, beforeEnter: AdminAuth },
+  
+  // Courses
+  { path: '/admin/courses', name: 'Courses', component: Courses, beforeEnter: AdminAuth },
 
   {
     

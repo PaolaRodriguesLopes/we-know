@@ -67,6 +67,8 @@ CREATE TABLE IF NOT EXISTS `articles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
 
+ALTER TABLE `articles` ADD `comments` VARCHAR(500) NULL DEFAULT NULL ;
+
 -----------------------------------------------
 
 npm install nodemon
