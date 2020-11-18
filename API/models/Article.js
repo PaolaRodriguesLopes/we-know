@@ -19,7 +19,7 @@ class Article{
             .join('categories', 'articles.category', 'categories.id')
             .join('users', 'articles.author', 'users.id')
             .join('subjects', 'articles.subject', 'subjects.id')
-            .select(this.allColumns);
+            .select(this.allColumns).where('articles.status_article',1);
 
             return result;
         }catch(err){
@@ -40,10 +40,11 @@ class Article{
 
                 result = await knex.select('articles.*').from('articles')
                                    .leftJoin(table, `articles.${key}`, `${table}.id`)
-                                   .where(`${table}.${column}`, 'like', `%${value}%`);
+                                   .where(`${table}.${column}`, 'like', `%${value}%`)
+                                   .andWhere('articles.status_article',1);
             }
             else {
-                result = await knex.select('articles.*').from('articles').where(criteria, 'like', `%${value}%`);
+                result = await knex.select('articles.*').from('articles').where(criteria, 'like', `%${value}%`).andWhere('articles.status_article',1);
             }
 
             if (result == null) {
