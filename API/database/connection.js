@@ -1,13 +1,13 @@
-/*var knex = require('knex')({
-    client: 'mysql2',
-    connection: {
-      host : 'weknow.cqeueigzxw1e.us-east-2.rds.amazonaws.com',
-      user : 'admin',
-      password: 'Facens2020',
-      database : 'weknow'
-    }
-  });
-*/
+// var knex = require('knex')({
+//     client: 'mysql2',
+//     connection: {
+//       host : 'weknow.cqeueigzxw1e.us-east-2.rds.amazonaws.com',
+//       user : 'admin',
+//       password: 'Facens2020',
+//       database : 'weknow'
+//     }
+//   });
+
 
 
 var knex = require('knex')({
@@ -17,7 +17,7 @@ var knex = require('knex')({
     host: 'localhost',
     user : 'root',
     // password: 'root',
-    password: '',
+    password: '1234',
     database : 'weknow'
   }
 });
