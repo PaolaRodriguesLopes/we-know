@@ -1,4 +1,3 @@
-const { log } = require("handlebars");
 var Article = require("../models/Article");
 
 
@@ -6,6 +5,13 @@ class ArticleController{
     async getArticles(req, res){
         var articles = await Article.findAll();
         res.json(articles);
+    }
+
+    async findByValueAndCriteria(request, response) {
+        let value = request.query.value;
+        let criteria = request.query.criteria;
+        const articles = await Article.findByValueAndCriteria(value, criteria);
+        response.json(articles);
     }
 
     async getArticleByID (req,res){

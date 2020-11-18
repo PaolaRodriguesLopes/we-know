@@ -1,5 +1,6 @@
 var knex = require("../database/connection");
 var bcrypt = require("bcrypt");
+const { Exception } = require("handlebars");
 
 
 class Article{
@@ -15,6 +16,35 @@ class Article{
     async findAll(){
         try{
             var result = await knex.select(this.allColumns).table("articles");
+            return result;
+        }catch(err){
+            console.log(err);
+            return [];
+        }
+    }
+
+    async findByValueAndCriteria(value, criteria){
+        try {
+            let result = null;
+            console.log('model');
+            if (criteria.indexOf('-') !== -1) {
+                criteria = criteria.split('-');
+                const table = criteria[0];
+                const key = criteria[1];
+                const column = criteria[2];
+                console.log('findByValueAndCriteria -- ', 'table', table, 'column', column, 'value', value);
+                result = await knex.select('articles.*').from('articles')
+                                   .leftJoin(table, `articles.${key}`, `${table}.id`)
+                                   .where(`${table}.${column}`, 'like', `%${value}%`);
+            }
+            else {
+                result = await knex.select('articles.*').from('articles').where(criteria, 'like', `%${value}%`);
+            }
+
+            if (result == null) {
+                throw new Exception('result cannot be null!');
+            }
+
             return result;
         }catch(err){
             console.log(err);

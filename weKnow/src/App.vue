@@ -39,17 +39,22 @@
     <div class="filterBar" v-if="!hideBars">
       <div class="filters">
         <div class="field field1">
-          <input type="text" placeholder="Buscar" />
+          <input type="text" placeholder="Buscar" v-model="currentSearchValue" />
         </div>
 
         <div class="field field2">
-          <select name="" id="">
-            <option value="">All</option>
+          <select v-model="currentCriteria">
+            <option value=""> Escolha um critério </option>
+            <option v-for="criteria of searchCriterias" :key="criteria.value" v-bind:value="criteria.value">
+                {{ criteria.text }}
+            </option>
           </select>
         </div>
 
         <div class="field field3">
-          <button class="btn-filtrar">FILTRAR</button>
+          <button type="button" class="btn-filtrar" @click="searchInArticles()">
+            FILTRAR
+          </button>
         </div>
       </div>
 
@@ -59,7 +64,8 @@
         </p>
       </div>
     </div>
-    <router-view class="mainContent" />
+    <router-view class="mainContent"/>
+    <!-- <router-view class="mainContent" :key="$route.fullPath" /> -->
   </div>
 </template>
 
@@ -83,7 +89,15 @@
               isAuthenticated: false,
               fullName: '',
               sessionUser: undefined,
-              hideBars: false
+              hideBars: false,
+              searchCriterias: [
+                { value: 'subjects-subject-description', text: 'Matéria' },
+                { value: 'categories-category-description', text: 'Categoria' },
+                { value: 'users-author-name', text: 'Autor' },
+                { value: 'title', text: 'Tema' },
+              ],
+              currentCriteria: '',
+              currentSearchValue: ''
           }
       },
       methods: {
@@ -158,6 +172,31 @@
           this.$router.push({ 
             name: 'Articles', params
           });
+        },
+
+        searchInArticles() {
+          const params = {
+            value: this.currentSearchValue, criteria: this.currentCriteria
+          };
+
+          this.$router.push({ name: 'Articles', params: params });
+
+          /*const fullPath = this.$route.fullPath;
+          if (fullPath !== '/articles') {
+            this.$router.push({ name: 'Articles', params: params });
+          }
+          else {
+            let r = this.$router.resolve({
+              name: this.$route.name,
+              params: params,
+              query: this.$route.query
+            });
+
+            console.log('r', r);
+
+            window.location.assign(r.route);
+
+          }*/
         }
       },
       filters: {

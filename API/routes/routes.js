@@ -51,6 +51,7 @@ router.delete("/subject/:id", AdminAuth, SubjectController.remove);
 // Article routes
 router.post('/article', LoginAuth, ArticleController.create);
 router.get("/article", ArticleController.getArticles);
+router.get("/article/custom", ArticleController.findByValueAndCriteria);
 router.get("/article/:id", ArticleController.getArticleByID);
 router.put("/article", LoginAuth, ArticleController.edit);
 router.delete("/article/:id", LoginAuth, ArticleController.remove);

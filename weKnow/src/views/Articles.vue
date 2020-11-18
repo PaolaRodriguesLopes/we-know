@@ -177,9 +177,22 @@
         created() {
             this.getUserRole();
 
-            const params = this.$router.params;
-            if (params !== undefined &&  params.id !== undefined) {
-                //
+            const params = this.$route.params;
+            console.log('Articles params', params);
+            if (params !== undefined) {
+                if (params.id !== undefined) {
+                    // find by author id
+                }
+                else if (params.value !== undefined && params.criteria !== undefined) {
+                    const criteria = params.criteria;
+                    const value = params.value;
+
+                    console.log('value', value, 'criteria', criteria);
+                    this.findByValueAndCriteria(value, criteria);
+                }
+                else {
+                    this.findAll();
+                }
             }
             else {
                 this.findAll();
@@ -214,9 +227,23 @@
                 });
             },
 
-            findByAuthors() {
+            findByAuthor(authorId) {
                 // TODO!
                 console.log('aaa');
+                console.log(authorId);
+            },
+
+            findByValueAndCriteria(value, criteria) {
+                // TODO!
+                console.log('find by criteria and value');
+                console.log(value, criteria);
+                ArticleServices.findByValueAndCriteria(value, criteria).then(response => {
+                    console.log('response findByValueAndCriteria', response);
+                    this.articles = response.data;
+                }).catch(error => { 
+                    console.log('error findByValueAndCriteria', error);
+                    this.articles = [];
+                });
             },
 
             hideModal() {
