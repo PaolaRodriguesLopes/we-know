@@ -27,7 +27,7 @@
           </div>
         </div>
         <footer class="card-footer">
-          <router-link :to="{ name: 'ArticleDetails', params: { id: art.id }}">
+          <router-link :to="{ name: 'ArticleDetails', params: { id: art.id, lastPath: currentLocation }}">
             <button type="button" class="button is-info mx-1 my-1">
               Detalhes
             </button>
@@ -49,6 +49,7 @@ import Filters from '../js/others/Filters';
 import ArticleServices from '../js/services/ArticleServices';
 export default {
   created() {
+    this.currentLocation = window.location.href;
     const params = new URLSearchParams(window.location.search);
     if (params) {
        if (params.get('value') && params.get('criteria')) {
@@ -68,7 +69,8 @@ export default {
   data() {
     return {
       articles: [],
-      headerTitle: 'Últimos Artigos'
+      headerTitle: 'Últimos Artigos',
+      currentLocation: ''
     };
   },
   methods: {

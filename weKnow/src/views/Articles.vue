@@ -36,7 +36,7 @@
                             <td>
 
                                 <!-- details -->
-                                <router-link :to="{ name: 'ArticleDetails', params: { id: article.id }}">
+                                <router-link :to="{ name: 'ArticleDetails', params: { id: article.id, lastPath: currentLocation }}">
                                     <button type="button" class="button is-light"> 
                                         Detalhes 
                                     </button>
@@ -175,6 +175,7 @@
     export default {
 
         created() {
+            this.currentLocation = window.location.href;
             this.getSessionUser();
             this.getUserRole();
             this.checkParams();
@@ -194,7 +195,8 @@
                 statusValues: ['Approved', 'Rejected', 'Waiting Approving'],
                 userRole: -1,
                 comments: '',
-                sessionUser: null
+                sessionUser: null,
+                currentLocation: ''
             }
         },
 
