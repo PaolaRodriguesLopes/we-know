@@ -13,8 +13,6 @@ class UserController{
     }
 
     async findUserByEmail(request, response) {
-        console.log('request');
-        console.log(request);
         const email = request.query.value;
         const user = await User.findByEmail(email);
 

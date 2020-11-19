@@ -161,7 +161,8 @@
                     console.log('ArticleServices insert response', response);
                     if (response.data && response.data !== '') {
                         alert('Novo artigo criado com sucesso!');
-                        this.$router.push({ name: 'Articles', params: { id: payload.author } });
+                        location.href = `Articles?id=${payload.author}`;
+                        // this.$router.push({ name: 'Articles', params: { id: payload.author } });
                     }
                     else {
                         alert('Erro ao inserir o novo artigo!');    

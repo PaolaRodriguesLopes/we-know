@@ -1,8 +1,8 @@
 var Article = require("../models/Article");
 
 
-class ArticleController{
-    async getArticles(req, res){
+class ArticleController {
+    async getArticles(req, res) {
         var articles = await Article.findAll();
         res.json(articles);
     }
@@ -14,127 +14,155 @@ class ArticleController{
         response.json(articles);
     }
 
-    async getArticleByID (req,res){
+    async getArticleByID(req, res) {
         var id = req.params.id;
         var article = await Article.findById(id);
 
-        if (article == undefined){
+        if (article == undefined) {
             res.status(404);
             res.json({});
-        }else{
+        } else {
             res.status(200);
             res.json(article);
         }
     }
 
-    async create(req,res){
-        var {title,description,text,category,author,subject} = req.body;
- 
-        if (title == undefined || title == '' || title == ' '){
-            res.status(400);
-            res.json({err: "O título é inválido"});
-            return; 
-        }   
-        if (description == undefined || description == '' || description == ' '){
-            res.status(400);
-            res.json({err: "A descrição é inválida"});
-            return; 
-        }  
-        if (text == undefined || text == '' || text == ' '){
-            res.status(400);
-            res.json({err: "O texto é inválido"});
-            return; 
-        }  
-        if (category == undefined || category == '' || category == ' '|| category == 0){
-            res.status(400);
-            res.json({err: "A categoria é inválida"});
-            return; 
-        }  
-        if (author == undefined || author == '' || author == ' ' || author == 0){
-            res.status(400);
-            res.json({err: "O autor é inválido"});
-            return; 
-        }  
-        if (subject == undefined || subject == '' || subject == ' ' || subject == 0){
-            res.status(400);
-            res.json({err: "A matéria é inválida"});
-            return; 
-        }  
-        
-         
-        await Article.new(title,description,text,category,author,subject);
- 
-         res.status(200);
-         res.send("Tudo ok!");
-     }
+    async findByAuthor(request, response) {
+        var authorId = request.params.id;
+        var articles = await Article.findByAuthor(authorId);
+        response.json(articles);
+    }
 
-     async edit(req, res){
-        var {id, title,description,text,category,author,subject, status_article} = req.body;
-        var result = await Article.update(id,title,description,text,category,author,subject, status_article);
-        if(result != undefined){
-            if(result.status){
+    async findByAuthorWhereStatusIs(request, response) {
+        var authorId = request.query.authorId;
+        var statusArticle = request.query.statusArticle;
+        var articles = await Article.findByAuthorWhereStatusIs(authorId, statusArticle);
+        response.json(articles);
+    }
+
+    async create(req, res) {
+        var { title, description, text, category, author, subject } = req.body;
+
+        if (title == undefined || title == '' || title == ' ') {
+            res.status(400);
+            res.json({ err: "O título é inválido" });
+            return;
+        }
+        if (description == undefined || description == '' || description == ' ') {
+            res.status(400);
+            res.json({ err: "A descrição é inválida" });
+            return;
+        }
+        if (text == undefined || text == '' || text == ' ') {
+            res.status(400);
+            res.json({ err: "O texto é inválido" });
+            return;
+        }
+        if (category == undefined || category == '' || category == ' ' || category == 0) {
+            res.status(400);
+            res.json({ err: "A categoria é inválida" });
+            return;
+        }
+        if (author == undefined || author == '' || author == ' ' || author == 0) {
+            res.status(400);
+            res.json({ err: "O autor é inválido" });
+            return;
+        }
+        if (subject == undefined || subject == '' || subject == ' ' || subject == 0) {
+            res.status(400);
+            res.json({ err: "A matéria é inválida" });
+            return;
+        }
+
+
+        await Article.new(title, description, text, category, author, subject);
+
+        res.status(200);
+        res.send("Tudo ok!");
+    }
+
+    async edit(req, res) {
+        var { id, title, description, text, category, author, subject, status_article } = req.body;
+        var result = await Article.update(id, title, description, text, category, author, subject, status_article);
+        if (result != undefined) {
+            if (result.status) {
                 res.status(200);
                 res.send("Tudo OK!");
-            }else{
+            } else {
                 res.status(406);
                 res.send(result.err)
             }
-        }else{
+        } else {
             res.status(406);
             res.send("Ocorreu um erro no servidor!");
         }
     }
 
-    async editStatus(req, res){
+    async editStatus(req, res) {
         var { id, status_article } = req.body;
         var result = await Article.updateStatus(id, status_article);
         if (result != undefined) {
-            console.log('result', result);
-            if(result.status){
+            if (result.status) {
                 res.status(200);
                 res.send("Tudo OK!");
-            }else{
+            } else {
                 res.status(406);
                 res.send(result.err)
             }
-        }else{
+        } else {
             res.status(406);
             res.send("Ocorreu um erro no servidor!");
         }
     }
 
-    async editComments(request, response){
+    async editComments(request, response) {
         var { id, comments } = request.body;
         var result = await Article.updateComments(id, comments);
         if (result != undefined) {
-            console.log('result', result);
-            if(result.status){
+            if (result.status) {
                 response.status(200);
                 response.send("Tudo OK!");
-            }else{
+            } else {
                 response.status(406);
                 response.send(result.err)
             }
-        }else{
+        } else {
             response.status(406);
             response.send("Ocorreu um erro no servidor!");
         }
     }
 
-    async remove(req, res){
+    async editApprovedBy (request, response) {
+        var { id, approved_by } = request.body;
+        var result = await Article.updateApprovedBy(id, approved_by);
+        if (result != undefined) {
+            if (result.status) {
+                response.status(200);
+                response.send("Tudo OK!");
+            } else {
+                response.status(406);
+                response.send(result.err)
+            }
+        } else {
+            response.status(406);
+            response.send("Ocorreu um erro no servidor!");
+        }
+    }
+
+    async remove(req, res) {
         var id = req.params.id;
 
         var result = await Article.delete(id);
 
-        if(result.status){
+        if (result.status) {
             res.status(200);
             res.send("Tudo OK!");
-        }else{
+        } else {
             res.status(406);
             res.send(result.err);
         }
     }
 
-    
+
 }
 module.exports = new ArticleController();
