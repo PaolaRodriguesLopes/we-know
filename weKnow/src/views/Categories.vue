@@ -9,7 +9,7 @@
         <!-- new category -->
         <div class="table-form">
             <div class="container py-3">
-            <input type="text" class="mx-1 descInput" placeholder="Descrição" maxlength="50" v-model="description">
+            <input type="text" class="mx-1" placeholder="Descrição" maxlength="50" v-model="description" style="width:80%;">
             <button type="button" class="button mx-1 is-warning" @click="insertCategory();">
                 Adicionar Categoria
             </button>
@@ -22,7 +22,7 @@
                 <table class="table is-bordered is-fullwidth is-stripped">
                     <thead>
                         <tr>
-                            <th> Descrição  </th>
+                            <th width="80%"> Descrição</th>
                             <th> Ações </th>
                         </tr>
                     </thead>

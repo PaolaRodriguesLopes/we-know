@@ -7,11 +7,13 @@
         </header>
 
         <!-- new subject -->
-        <div class="container py-3 table-form">
-            <input type="text" class="mx-1" placeholder="Descrição" maxlength="50" v-model="description">
-            <button type="button" class="button mx-1" @click="insertSubject();">
+        <div class="container">
+            <div class="py-3 table-form">
+            <input type="text" class="mx-1" placeholder="Descrição" maxlength="50" v-model="description" style="width:80%">
+            <button type="button" class="button mx-1 is-warning" @click="insertSubject();">
                 Adicionar Matéria
             </button>
+            </div>
         </div>
 
         <!-- subjects -->
@@ -20,7 +22,7 @@
                 <table class="table is-bordered is-fullwidth is-stripped">
                     <thead>
                         <tr>
-                            <th> Descrição  </th>
+                            <th width="70%"> Descrição  </th>
                             <th> Ações </th>
                         </tr>
                     </thead>

@@ -7,12 +7,14 @@
         </header>
 
         <!-- new course -->
-        <div class="container py-3 table-form">
-            <input type="text" class="mx-1" placeholder="Descrição" maxlength="50" v-model="description">
-            <input type="text" class="mx-1" placeholder="Duração" maxlength="150" v-model="duration">
-            <button type="button" class="button mx-1" @click="insertCourse();">
+        <div class="table-form">
+            <div class="container py-3">
+            <input type="text" class="mx-1" placeholder="Descrição" maxlength="50" v-model="description" style="width:60%;">
+            <input type="text" class="mx-1" placeholder="Duração" maxlength="150" v-model="duration" style="width:20%;">
+            <button type="button" class="button mx-1 is-warning" @click="insertCourse();">
                 Adicionar Curso
             </button>
+            </div>
         </div>
 
         <!-- courses -->
@@ -21,8 +23,8 @@
                 <table class="table is-bordered is-fullwidth is-stripped">
                     <thead>
                         <tr>
-                            <th> Descrição  </th>
-                            <th> Duração  </th>
+                        <th width="60%"> Descrição </th>
+                            <th width="10%">Duração</th>
                             <th> Ações </th>
                         </tr>
                     </thead>

@@ -32,17 +32,17 @@
           <div v-if="sessionUser">
             <li v-if="sessionUser.role === 1">
               <router-link :to="{ name: 'Categories' }">
-                Adcionar Categoria
+                Adicionar Categoria
               </router-link>
             </li>
             <li v-if="sessionUser.role === 1">
               <router-link :to="{ name: 'Courses' }">
-                Adcionar Curso
+                Adicionar Curso
               </router-link>
             </li>
             <li v-if="sessionUser.role === 1">
               <router-link :to="{ name: 'Subjects' }">
-                Adcionar Matéria
+                Adicionar Matéria
               </router-link>
             </li>
           </div>
