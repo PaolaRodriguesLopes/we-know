@@ -19,6 +19,28 @@
               Novo Artigo 
             </router-link>
           </li>
+          <div v-if="sessionUser != null && (sessionUser.role === 1 || sessionUser.role === 2)">
+            <li v-for="link of sideBarMenuLinks" :key="link.home">
+              <a :href="buildSideMenuLinkPath (link)" target="_self">
+                {{ link.text }}
+              </a>
+            </li>
+          </div>
+          <li v-if="sessionUser.role === 1">
+            <router-link :to="{ name: 'Categories' }"> 
+              Adcionar Categoria 
+            </router-link>
+          </li>
+          <li v-if="sessionUser.role === 1">
+            <router-link :to="{ name: 'Courses' }"> 
+              Adcionar Curso 
+            </router-link>
+          </li>
+          <li v-if="sessionUser.role === 1">
+            <router-link :to="{ name: 'Subjects' }"> 
+              Adcionar Matéria 
+            </router-link>
+          </li>
           <li><a href="#">Ajuda</a></li>
           <hr />
           <li>
@@ -29,14 +51,6 @@
               {{ link.text }}
             </a>
           </li>
-
-          <div v-if="sessionUser != null && (sessionUser.role === 1 || sessionUser.role === 2)">
-            <li v-for="link of sideBarMenuLinks" :key="link.home">
-              <a :href="buildSideMenuLinkPath (link)" target="_self">
-                {{ link.text }}
-              </a>
-            </li>
-          </div>
         </ul>
       </nav>
     </div>
