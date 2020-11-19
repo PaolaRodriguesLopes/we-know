@@ -29,16 +29,22 @@ class ArticleServices {
     }
 
     async findByAuthor(authorId) {
-        const payload = { authorId };
         const request = Helpers.getRequestWithHeader();
-        const url = `${this.baseUrl}/author`;
-        return await axios.get(url, payload, request);
+        const url = `${this.baseUrl}/author/${authorId}`;
+        return await axios.get(url, request);
     }
 
     async findByValueAndCriteria(value, criteria) {
         const request = Helpers.getRequestWithHeader();
         const url = `${this.baseUrl}/custom`;
         const params = { value: value, criteria :criteria };
+        return await axios.get(url, { params: params }, request);
+    }
+
+    async findByAuthorWhereStatusIs(authorId, statusArticle) {
+        const request = Helpers.getRequestWithHeader();
+        const url = `${this.baseUrl}/author-status`;
+        const params = { authorId: authorId, statusArticle :statusArticle };
         return await axios.get(url, { params: params }, request);
     }
 
@@ -57,6 +63,12 @@ class ArticleServices {
     async updateComments(object) {
         const request = Helpers.getRequestWithHeader();
         const url = `${this.baseUrl}/comments`;
+        return await axios.put(url, object, request);
+    }
+
+    async updateApprovedBy(object) {
+        const request = Helpers.getRequestWithHeader();
+        const url = `${this.baseUrl}/approved_by`;
         return await axios.put(url, object, request);
     }
 }

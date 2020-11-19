@@ -7,9 +7,7 @@
       <nav class="menu">
         <ul>
           <li>
-            <router-link :to="{ name: 'Home' }"> 
-              Home 
-            </router-link>
+            <a href="/"> Home </a>
           </li>
           <li v-if="sessionUser">
             <a href="#" @click="redirectToArticles()"> 
@@ -24,15 +22,21 @@
           <li><a href="#">Ajuda</a></li>
           <hr />
           <li>
-            <router-link :to="{ name: 'Home' }"> 
-              Últimos Artigos 
-            </router-link>
+            <a href="/"> Últimos Artigos </a>
           </li>
-          <li><a href="#">Engenharia Computação</a></li>
-          <li><a href="#">Engenharia Elétrica</a></li>
-          <li><a href="#">Engenharia Produção</a></li>
-          <li><a href="#">IoT</a></li>
-          <li><a href="#">Física</a></li>
+          <li v-for="link of subjectLinks" :key="link.home">
+            <a :href="buildSideMenuLinkPath (link)" target="_self">
+              {{ link.text }}
+            </a>
+          </li>
+
+          <div v-if="sessionUser != null && (sessionUser.role === 1 || sessionUser.role === 2)">
+            <li v-for="link of sideBarMenuLinks" :key="link.home">
+              <a :href="buildSideMenuLinkPath (link)" target="_self">
+                {{ link.text }}
+              </a>
+            </li>
+          </div>
         </ul>
       </nav>
     </div>
@@ -56,6 +60,7 @@
             FILTRAR
           </button>
         </div>
+
       </div>
 
       <div class="profile" v-if="isAuthenticated">
@@ -64,25 +69,25 @@
         </p>
       </div>
     </div>
-    <router-view class="mainContent"/>
-    <!-- <router-view class="mainContent" :key="$route.fullPath" /> -->
+    <!-- <router-view class="mainContent"/> -->
+    <router-view class="mainContent" />
   </div>
 </template>
 
 
 <script>
-  import axios from 'axios';
   import Helpers from './js/others/Helpers';
-  import config from './js/others/Config';
+  import SubjectServices from './js/services/SubjectServices';
   export default {
 
       created() {
         this.checkIfIsToHideBars();
         this.storeLoggedUser();
-        // this.getUserData();
+        this.getSubjects();
       },
       data() {
           return {
+              componentKey: 0,
               users: [],
               showModal: false,
               deleteUserId: -1,
@@ -97,7 +102,12 @@
                 { value: 'title', text: 'Tema' },
               ],
               currentCriteria: '',
-              currentSearchValue: ''
+              currentSearchValue: '',
+              subjectLinks: [],
+              sideBarMenuLinks: [
+                { path: 'Articles', value: 1, text: 'Aprovado por mim', criteria: 'author_status', },
+                { path: 'Articles', value: 0, text: 'Aguardando Aprovação', criteria: 'status_article', },
+              ]
           }
       },
       methods: {
@@ -107,9 +117,8 @@
           this.hideBars = (pathname === '/login' || pathname === '/register' || pathname === '/recoverpassword');
         },
         storeLoggedUser() {
-          let sessionUser = localStorage.getItem('sessionUser');
-          if (sessionUser !== undefined) {
-            sessionUser = JSON.parse(sessionUser);
+          let sessionUser = Helpers.getSessionUser();
+          if (sessionUser !== null) {
             this.isAuthenticated = true;
             this.sessionUser = sessionUser;
             this.fullName = sessionUser.name;
@@ -120,84 +129,33 @@
             this.fullName = '';
           }
         },
-        /*getUserData() {
-          if (this.sessionUser) {
-            const request = Helpers.getRequestWithHeader();
-            const url = `${config.API_URL}/user`;
-            axios.get(url, request).then(response => {
-              this.isAuthenticated = (response.request.status == 200);
-              this.users = response.data;
-              this.responseUser = (response.request.response.replace("[","").replace("]",""));
-              this.responseUser = JSON.parse(this.responseUser);
-              this.fullName = this.responseUser.name;
-            }).catch (error => {
-              console.log(error);
-              this.isAuthenticated = false;
-              this.users = [];
-              this.responseUser = {};
-              this.fullName = '';
-            });
-          }
-        },*/
-
-        hideModal(){
-            this.showModal = false;
-        },
-        showModalUser(id){
-            this.deleteUserId = id;
-            this.showModal = true;
-        },
-
-        deleteUser() {
-
-          const request = Helpers.getRequestWithHeader();
-          const url = `${config.API_URL}/user/${this.deleteUserId}`;
-          axios.delete(url, request).then(response => {
-            console.log(response);
-            this.showModal = false;
-            this.users = this.users.filter(u => u.id != this.deleteUserId);
-          }).catch (error => {
-              console.log(error);
-              this.showModal = false;
-          });
-        },
         logout(){
           localStorage.setItem ('token', null);
           this.$router.replace ('login');
         },
         redirectToArticles() {
-          console.log('this.sessionUser', this.sessionUser);
-          const params = { id: this.sessionUser.id };
-          console.log('params', params);
-          this.$router.push({ 
-            name: 'Articles', params
-          });
+          location.href = `Articles?id=${this.sessionUser.id}`;
         },
 
         searchInArticles() {
-          const params = {
-            value: this.currentSearchValue, criteria: this.currentCriteria
-          };
+          location.href = `Articles?value=${this.currentSearchValue}&criteria=${this.currentCriteria}`;
+        },
 
-          this.$router.push({ name: 'Articles', params: params });
+        buildSideMenuLinkPath(link) {
+          return `${link.path}?value=${link.value !== undefined ? link.value : link.text}&criteria=${link.criteria}`;
+        },
 
-          /*const fullPath = this.$route.fullPath;
-          if (fullPath !== '/articles') {
-            this.$router.push({ name: 'Articles', params: params });
-          }
-          else {
-            let r = this.$router.resolve({
-              name: this.$route.name,
-              params: params,
-              query: this.$route.query
+        getSubjects() {
+          SubjectServices.getSubjects().then(response => {
+            this.subjectLinks = [];
+            const subjects = response.data;
+            subjects.forEach(sub => {
+              this.subjectLinks.push({
+                path: '/', text: sub.description, criteria: 'subjects-subject-description'
+              });
             });
-
-            console.log('r', r);
-
-            window.location.assign(r.route);
-
-          }*/
-        }
+          }).catch (() => this.subjectLinks = []);
+        },
       },
       filters: {
           processRole: function(value){
@@ -215,6 +173,7 @@
 
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -43,7 +43,7 @@ router.delete("/category/:id", AdminAuth, CategoryController.remove);
 
 // Subject routes
 router.post('/subject', AdminAuth, SubjectController.create);
-router.get("/subject", LoginAuth, SubjectController.getSubjects);
+router.get("/subject", SubjectController.getSubjects);
 router.get("/subject/:id", AdminAuth, SubjectController.getSubjectByID);
 router.put("/subject", AdminAuth, SubjectController.edit);
 router.delete("/subject/:id", AdminAuth, SubjectController.remove);
@@ -52,11 +52,13 @@ router.delete("/subject/:id", AdminAuth, SubjectController.remove);
 router.post('/article', LoginAuth, ArticleController.create);
 router.get("/article", ArticleController.getArticles);
 router.get("/article/custom", ArticleController.findByValueAndCriteria);
+router.get("/article/author-status", ArticleController.findByAuthorWhereStatusIs);
 router.get("/article/:id", ArticleController.getArticleByID);
+router.get("/article/author/:id", ArticleController.findByAuthor);
 router.put("/article", LoginAuth, ArticleController.edit);
 router.delete("/article/:id", LoginAuth, ArticleController.remove);
 router.put("/article/status", MediumAuth, ArticleController.editStatus);
 router.put("/article/comments", MediumAuth, ArticleController.editComments);
-
+router.put("/article/approved_by", MediumAuth, ArticleController.editApprovedBy);
 
 module.exports = router;

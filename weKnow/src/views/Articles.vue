@@ -175,28 +175,9 @@
     export default {
 
         created() {
+            this.getSessionUser();
             this.getUserRole();
-
-            const params = this.$route.params;
-            console.log('Articles params', params);
-            if (params !== undefined) {
-                if (params.id !== undefined) {
-                    // find by author id
-                }
-                else if (params.value !== undefined && params.criteria !== undefined) {
-                    const criteria = params.criteria;
-                    const value = params.value;
-
-                    console.log('value', value, 'criteria', criteria);
-                    this.findByValueAndCriteria(value, criteria);
-                }
-                else {
-                    this.findAll();
-                }
-            }
-            else {
-                this.findAll();
-            }
+            this.checkParams();
         },
 
         data() {
@@ -212,38 +193,57 @@
                 criteria: ['Title', 'Description', 'Status'],
                 statusValues: ['Approved', 'Rejected', 'Waiting Approving'],
                 userRole: -1,
-                comments: ''
+                comments: '',
+                sessionUser: null
             }
         },
 
         methods: {
+            checkParams() {
+                const params = new URLSearchParams(window.location.search);
+                if (params) {
+                    if (params.get('id')) {
+                        this.findByAuthor(params.get('id'));
+                    }
+                    else if (params.get('value') && params.get('criteria')) {
+                        const criteria = params.get('criteria');
+                        const value = params.get('value');
+                        console.log('value', value, 'criteria', criteria);
+
+                        if (criteria !== 'author_status') {
+                            this.findByValueAndCriteria(value, criteria);
+                        }
+                        else {
+                            this.findByAuthorWhereStatusIs(this.sessionUser.id, value);
+                        }
+                    }
+                    else {
+                        this.findAll();
+                    }
+                }
+                else {
+                    this.findAll();
+                }
+            },
+
+            getSessionUser() {
+                this.sessionUser = Helpers.getSessionUser();
+            },
+
             findAll() {
-                ArticleServices.getArticles().then(response => {
-                    console.log('response get article', response);
-                    this.articles = response.data;
-                }).catch(error => { 
-                    console.log('error get article', error);
-                    this.articles = [];
-                });
+                ArticleServices.getArticles().then(response => this.articles = response.data).catch(() => this.articles = []);
             },
 
             findByAuthor(authorId) {
-                // TODO!
-                console.log('aaa');
-                console.log(authorId);
+                ArticleServices.findByAuthor(authorId).then(response => this.articles = response.data).catch(() => this.articles = []);
             },
 
             findByValueAndCriteria(value, criteria) {
-                // TODO!
-                console.log('find by criteria and value');
-                console.log(value, criteria);
-                ArticleServices.findByValueAndCriteria(value, criteria).then(response => {
-                    console.log('response findByValueAndCriteria', response);
-                    this.articles = response.data;
-                }).catch(error => { 
-                    console.log('error findByValueAndCriteria', error);
-                    this.articles = [];
-                });
+                ArticleServices.findByValueAndCriteria(value, criteria).then(response => this.articles = response.data).catch(() => this.articles = []);
+            },
+
+            findByAuthorWhereStatusIs(authorId, statusArticle) {
+                ArticleServices.findByAuthorWhereStatusIs(authorId, statusArticle).then(response => this.articles = response.data).catch(() => this.articles = []);
             },
 
             hideModal() {
@@ -270,7 +270,7 @@
                 ArticleServices.remove(this.deleteArticleId).then(response => { 
                     console.log('response delete article', response);
                     this.showModal = false;
-                    this.articles = this.articles.filter(article => article.id != this.deleteArticleId);
+                    this.checkParams();
                 }).catch(error => {
                     console.log('error delete article', error);
                     this.showModal = false;
@@ -279,10 +279,17 @@
 
             updateStatus(id, status_article) {
                 const payload = { id, status_article }
-                ArticleServices.updateStatus(payload).then(response => { 
+                ArticleServices.updateStatus(payload).then(response => {
                     console.log('response updateStatus article', response);
-                    this.showReproveModal = false;
-                    this.findAll();
+
+                    ArticleServices.updateApprovedBy({ id: payload.id, approved_by: this.sessionUser.id })
+                        .then(response => {
+                            console.log('response updateApprovedBy article', response);
+                            this.showReproveModal = false;
+                            this.checkParams();
+                        }).catch(error => {
+                            console.log('error updateApprovedBy article', error);
+                        });
                 }).catch(error => {
                     console.log('error updateStatus article', error);
                 });
@@ -327,9 +334,8 @@
             },
 
             getUserRole() {
-                const sessionUser = Helpers.getSessionUser();
-                if (sessionUser) {
-                    this.userRole = sessionUser.role;
+                if (this.sessionUser) {
+                    this.userRole = this.sessionUser.role;
                     console.log('userRole', this.userRole);
                 }
             }

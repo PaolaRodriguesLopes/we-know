@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
 
 ALTER TABLE `articles` ADD `comments` VARCHAR(500) NULL DEFAULT NULL ;
+ALTER TABLE `articles` ADD `approved_by` INT NULL DEFAULT NULL ;
 
 -----------------------------------------------
 
