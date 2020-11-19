@@ -7,11 +7,13 @@
         </header>
 
         <!-- new category -->
-        <div class="container py-3 table-form">
-            <input type="text" class="mx-1" placeholder="Descrição" maxlength="50" v-model="description">
-            <button type="button" class="button mx-1" @click="insertCategory();">
+        <div class="table-form">
+            <div class="container py-3">
+            <input type="text" class="mx-1 descInput" placeholder="Descrição" maxlength="50" v-model="description">
+            <button type="button" class="button mx-1 is-warning" @click="insertCategory();">
                 Adicionar Categoria
             </button>
+            </div>
         </div>
 
         <!-- categories -->
@@ -108,6 +110,7 @@
 
     </article>
 </template>
+
 
 <script src="../js/Categories.js"></script>
 <style src="../css/global.css"></style>
