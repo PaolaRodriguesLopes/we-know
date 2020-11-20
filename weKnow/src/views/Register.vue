@@ -32,6 +32,11 @@
                     </select>
                     </div>
 
+                    <router-link :to="{ name: 'Login' }">
+                        <button class="button is-light">
+                            Voltar
+                        </button>
+                    </router-link>
                     
                     <button class="button is-success" @click="register">Cadastrar</button>
                 </div>
@@ -97,6 +102,7 @@ body{
 .default{
     background: #CCC8C8;
     min-height: 100%;
+    width: 100%;
     display: flex;
 }
 .box-login{
