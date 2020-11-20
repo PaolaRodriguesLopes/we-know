@@ -89,6 +89,12 @@
         </div>
       </div>
 
+      <div class="mx-5 my-2" v-if="!isAuthenticated">
+          <button type="button" class="button is-info is-outlined" @click="logout">
+            Fazer Login
+          </button>
+      </div>
+
       <div class="profile" v-if="isAuthenticated">
         <p>
           Seja bem-vindo(a), <span class="p-nome"> {{ fullName }} </span><br />
@@ -97,7 +103,6 @@
         </p>
       </div>
     </div>
-    <!-- <router-view class="mainContent"/> -->
     <router-view class="mainContent" />
   </div>
 </template>
@@ -111,6 +116,14 @@ export default {
     this.checkIfIsToHideBars();
     this.storeLoggedUser();
     this.getSubjects();
+  },
+  beforeUpdate() {
+    this.storeLoggedUser();
+    
+    const params = this.$route.params;
+    if (params.hideBars !== undefined) {
+      this.hideBars = params.hideBars;
+    }
   },
   data() {
     return {
@@ -158,6 +171,7 @@ export default {
     },
     storeLoggedUser() {
       let sessionUser = Helpers.getSessionUser();
+      console.log('sessionUser', sessionUser);
       if (sessionUser !== null) {
         this.isAuthenticated = true;
         this.sessionUser = sessionUser;
@@ -169,15 +183,16 @@ export default {
       }
     },
     logout() {
-      localStorage.setItem("token", null);
-      this.$router.replace("login");
+      localStorage.setItem('sessionUser', null);
+      localStorage.setItem('token', null);
+      location.href = 'login';
     },
     redirectToArticles() {
       location.href = `Articles?id=${this.sessionUser.id}`;
     },
 
     searchInArticles() {
-      location.href = `Articles?value=${this.currentSearchValue}&criteria=${this.currentCriteria}`;
+      location.href = `/?value=${this.currentSearchValue}&criteria=${this.currentCriteria}`;
     },
 
     buildSideMenuLinkPath(link) {

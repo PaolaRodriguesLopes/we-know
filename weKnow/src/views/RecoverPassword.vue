@@ -125,6 +125,7 @@ body {
 .default {
   background: #ccc8c8;
   min-height: 100%;
+  width: 100%;
   display: flex;
 }
 .box-login {
