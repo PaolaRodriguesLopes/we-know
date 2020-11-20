@@ -164,12 +164,10 @@
                 UserServices.update(payload).then(response => {
                     console.log(response);
                     alert('Usuário atualizado com sucesso!');
-                    // this.$router.push({name: 'Users'});
                     this.getBack();
 
                 }).catch(error => {
-                    alert('Erro ao atualizar o Usuário!');
-                    this.error = error.response.data.err;
+                    this.error = error.response.data;
                 });
             }
         }
