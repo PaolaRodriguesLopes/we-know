@@ -11,7 +11,7 @@
                 <table class="table is-bordered is-fullwidth is-stripped">
                     <thead>
                         <tr>
-                            <th> Título  </th>
+                            <th> Título</th>
                             <th> Descrição </th>
                             <th> Status </th>
                             <th> Última alteração </th>
@@ -20,7 +20,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="article in articles" :key="article.id">
-                            <td> {{ article.title }} </td>
+                            <td>  {{ article.title }} </td>
                             <td> {{ article.description }} </td>
                             <td> 
                                 <p :class="article.status_article | getTextColorFromArticleStatus">

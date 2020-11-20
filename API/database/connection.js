@@ -13,13 +13,13 @@
 var knex = require('knex')({
   client: 'mysql2',
   connection: {
-    host : '127.0.0.1',
+    host: '127.0.0.1',
     //host: 'localhost',
-    user : 'root',
-    //  password: 'root',
+    user: 'root',
+    password: 'root',
     // password: '1234',
-    password: '',
-    database : 'weknow'
+    //password: '',
+    database: 'weknow'
   }
 });
 
