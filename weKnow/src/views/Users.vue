@@ -1,57 +1,39 @@
 <template>
     <div>
-        <h1 class="title">Painel Administrador de Usuários</h1>
+        <header>
+            <h1 class="title">Painel Administrador de Usuários</h1>
+        </header>
 
-        <div class="box-add-user">
-            
-            <input type="text" name="name" id="name" placeholder="Nome Completo">
+        <router-link :to="{name: 'UserEdit', params:{ previousUrl: currentLocation }}">
+            <button class="button is-link my-3"> Novo Usuário </button>
+        </router-link>&nbsp; &nbsp; 
 
-            
-            <input type="email" name="email" id="email" placeholder="Email">
-
-            
-            <select name="cargo" id="">
-                
-                <option value="0">
-                    User
-                </option>
-                
-                <option value="1">
-                    Administrador
-                </option>
-
-                <option value="2">
-                    Professor
-                </option>
-            </select>
-
-            <button class="addUser" id="addUser">Adicionar Usuário</button>
-
-
+        <div class="box mx-3 my-3">
+            <div class="table-container">
+                <table class="table is-bordered is-fullwidth is-striped">
+                    <thead>
+                        <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Cargo</th>
+                        <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="user in users" :key="user.id">
+                            <td class="nameItem">{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{ user.role | processRole }}</td>
+                            <td>
+                                <router-link :to="{name: 'UserEdit', params:{ id: user.id, previousUrl: currentLocation }}">
+                                    <button class="button is-success"> Editar </button>
+                                </router-link>&nbsp; &nbsp; 
+                                <button class="button is-danger" @click="showModalUser(user.id)">Deletar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <table class="table is-bordered is-fullwidth is-striped">
-        <thead>
-            <tr>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Cargo</th>
-            <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="user in users" :key="user.id">
-                <td class="nameItem">{{user.name}}</td>
-                <td>{{user.email}}</td>
-                <td>{{ user.role | processRole }}</td>
-                <td>
-                    <router-link :to="{name: 'UserEdit', params:{ id: user.id, previousUrl: currentLocation }}">
-                        <button class="button is-success"> Editar </button>
-                    </router-link>&nbsp; &nbsp; 
-                    <button class="button is-danger" @click="showModalUser(user.id)">Deletar</button></td>
-            </tr>
-        </tbody>
-        </table>
 
 
         <div :class="{modal: true, 'is-active': showModal}">

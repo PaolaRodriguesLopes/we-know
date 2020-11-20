@@ -28,6 +28,11 @@ class UserServices {
         const request = Helpers.getRequestWithHeader();
         return await axios.put(this.baseUrl, payload, request);
     }
+
+    async insert(payload) {
+        const request = Helpers.getRequestWithHeader();
+        return await axios.post(this.baseUrl, payload, request);
+    }
 }
 
 module.exports = new UserServices();
