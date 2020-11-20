@@ -26,6 +26,7 @@ router.post("/recoverpassword",UserController.recoverPassword);
 router.post("/changepassword",UserController.changePassword);
 router.post("/login",UserController.login);
 router.post("/validate",AdminAuth,HomeController.validate);
+router.post("/validateLogin",LoginAuth,HomeController.validate);
 
 // Course routes
 router.post('/course',AdminAuth,CourseController.create);

@@ -19,6 +19,11 @@ class Helpers {
 
         return null;
     }
+
+    static resetSessionUser () {
+        localStorage.setItem('sessionUser', null);
+        localStorage.setItem('token', null);
+    }
 }
 
 module.exports = Helpers;
