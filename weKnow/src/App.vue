@@ -13,7 +13,7 @@
             <a href="#" @click="redirectToArticles()"> Meus Artigos </a>
           </li>
           <li v-if="sessionUser">
-            <router-link :to="{ name: 'InsertArticle' }">
+            <router-link :to="{ name: 'InsertArticle', params: { lastPath: currentLocation } }">
               Novo Artigo
             </router-link>
           </li>
@@ -116,6 +116,7 @@ export default {
     this.checkIfIsToHideBars();
     this.storeLoggedUser();
     this.getSubjects();
+    this.currentLocation = window.location.href;
   },
   beforeUpdate() {
     this.storeLoggedUser();
@@ -128,11 +129,12 @@ export default {
   data() {
     return {
       componentKey: 0,
+      currentLocation: '',
       users: [],
       showModal: false,
       deleteUserId: -1,
       isAuthenticated: false,
-      fullName: "",
+      fullName: '',
       sessionUser: undefined,
       hideBars: false,
       searchCriterias: [
@@ -141,7 +143,7 @@ export default {
         { value: "users-author-name", text: "Autor" },
         { value: "title", text: "Tema" },
       ],
-      currentCriteria: "",
+      currentCriteria: "title",
       currentSearchValue: "",
       subjectLinks: [],
       sideBarMenuLinks: [

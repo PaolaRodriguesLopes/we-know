@@ -43,14 +43,14 @@
                                 </router-link>
 
                                 <!-- edit -->
-                                <div v-if="compareUserWithAuthor(article.author)">
-                                    <button type="button" class="button is-success" @click="gotoUpdate(article.author, article.id);"> 
+                                <div v-if="compareUserWithAuthor(article.author_id)">
+                                    <button type="button" class="button is-success" @click="gotoUpdate(article.author_id, article.id);"> 
                                         Editar 
                                     </button>
                                 </div>
                                 
                                 <!-- delete -->
-                                <div v-if="compareUserWithAuthor(article.author) || (userRole === 1 || userRole === 2)">
+                                <div v-if="compareUserWithAuthor(article.author_id) || (userRole === 1 || userRole === 2)">
                                     <button type="button" class="button is-danger" @click="showModalArticle(article.id);">
                                         Deletar
                                     </button>
@@ -328,7 +328,9 @@
             gotoUpdate(authorId, articleId) {
                 console.log('authorId', authorId, 'articleId', articleId);
                 if (this.compareUserWithAuthor(authorId)) {
-                    this.$router.push({ name: 'UpdateArticle', params: { id: articleId } });
+                    this.$router.push({ name: 'UpdateArticle', params: { 
+                        id: articleId, lastPath: window.location.href
+                    } });
                 }
                 else {
                     alert('Apenas o author poderá editar seu próprio artigo!');

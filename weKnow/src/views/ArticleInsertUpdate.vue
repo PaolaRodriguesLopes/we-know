@@ -49,11 +49,9 @@
                 <hr>
 
                 <div class="btns">
-                    <router-link :to="{ name: 'Articles' }">
-                        <button type="button" class="button is-outlined">
-                            Voltar para Artigos
-                        </button>
-                    </router-link>
+                    <button type="button" class="button is-outlined" @click="getBack();">
+                        Voltar
+                    </button>
 
                     <button type="button" class="button is-success" @click="save();">
                         Salvar
@@ -75,6 +73,11 @@
     export default {
 
         created() {
+            const lastPath = this.$route.params.lastPath;
+            if (lastPath) {
+                this.lastPath = lastPath;
+            }
+
             const currentId = this.$router?.currentRoute?.params?.id || undefined;
             this.headerTitle = (currentId ? 'Atualizar' : 'Novo');
             if (currentId) {
@@ -83,13 +86,13 @@
                     console.log('response get article', response);
                     const article = response.data;
                     if (article && article.id) {
-                        this.author = article.author;
-                        this.category = article.category;
+                        this.author = article.author_id;
+                        this.category = article.category_id;
                         this.description = article.description;
                         this.last_changed = article.last_changed;
                         this.published_date = article.published_date;
                         this.status_article = article.status_article;
-                        this.subject = article.subject;
+                        this.subject = article.subject_id;
                         this.text = article.text;
                         this.title = article.title;
                     }
@@ -128,7 +131,8 @@
                 category: 0,
                 error: undefined,
                 categories: [],
-                subjects: []
+                subjects: [],
+                lastPath: 'Articles'
             }
         },
 
@@ -152,6 +156,7 @@
                     this.insert(payload);
                 }
                 else {
+                    payload.status_article = 0;
                     this.update(payload);
                 }
             },
@@ -161,8 +166,7 @@
                     console.log('ArticleServices insert response', response);
                     if (response.data && response.data !== '') {
                         alert('Novo artigo criado com sucesso!');
-                        location.href = `Articles?id=${payload.author}`;
-                        // this.$router.push({ name: 'Articles', params: { id: payload.author } });
+                        location.href = `/Articles?id=${payload.author}`;
                     }
                     else {
                         alert('Erro ao inserir o novo artigo!');    
@@ -178,7 +182,7 @@
                     console.log('ArticleServices update response', response);
                     if (response.data && response.data !== '') {
                         alert('Artigo atualizado com sucesso!');
-                        this.$router.push({ name: 'Articles', params: { id: payload.author } });
+                        location.href = `/Articles?id=${payload.author}`;
                     }
                     else {
                         alert('Erro ao inserir o novo artigo!');    
@@ -187,6 +191,10 @@
                     console.log('update error', error);
                     alert('Erro ao atualizar o artigo!');
                 });
+            },
+
+            getBack() {
+                window.location.href = this.lastPath;
             }
         },
         
