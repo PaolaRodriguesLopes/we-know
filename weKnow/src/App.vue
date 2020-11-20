@@ -146,7 +146,7 @@ export default {
         { value: "subjects-subject-description", text: "Matéria" },
         { value: "categories-category-description", text: "Categoria" },
         { value: "users-author-name", text: "Autor" },
-        { value: "title", text: "Tema" },
+        { value: "title", text: "Título" },
       ],
       currentCriteria: "title",
       currentSearchValue: "",
