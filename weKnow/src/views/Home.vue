@@ -55,7 +55,11 @@ export default {
        if (params.get('value') && params.get('criteria')) {
             const criteria = params.get('criteria');
             const value = params.get('value');
-            this.headerTitle += ` sobre ${value}`;
+
+            if (criteria === 'subjects-subject-description') {
+              this.headerTitle += ` sobre ${value}`;
+            }
+            
             this.findByValueAndCriteria(value, criteria);
         }
         else {

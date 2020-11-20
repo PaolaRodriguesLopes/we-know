@@ -7,8 +7,11 @@ class Article {
 
     constructor() {
         this.allColumns = [
-            "articles.id", "articles.title", "articles.description", "articles.text", "categories.description as category",
-            "users.name as author", "subjects.description as subject", "articles.published_date", "articles.last_changed", "articles.status_article",
+            "articles.id", "articles.title", "articles.description", "articles.text",
+            "categories.id as category_id", "categories.description as category",
+            "users.name as author", "users.id as author_id",
+            "subjects.description as subject", "subjects.id as subject_id",
+            "articles.published_date", "articles.last_changed", "articles.status_article",
             "articles.comments"
         ];
     }

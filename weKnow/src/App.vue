@@ -13,7 +13,7 @@
             <a href="#" @click="redirectToArticles()"> Meus Artigos </a>
           </li>
           <li v-if="sessionUser">
-            <router-link :to="{ name: 'InsertArticle' }">
+            <router-link :to="{ name: 'InsertArticle', params: { lastPath: currentLocation } }">
               Novo Artigo
             </router-link>
           </li>
@@ -45,8 +45,12 @@
                 Gerenciar Matérias
               </router-link>
             </li>
+<<<<<<< HEAD
 
             <li v-if="sessionUser.role === 1">
+=======
+             <li v-if="sessionUser.role === 1">
+>>>>>>> 5b9d53a29f97ac092013713df8e1132b0e233f30
               <router-link :to="{ name: 'Users' }">
                 Gerenciar Usuários
               </router-link>
@@ -95,6 +99,12 @@
         </div>
       </div>
 
+      <div class="mx-5 my-2" v-if="!isAuthenticated">
+          <button type="button" class="button is-info is-outlined" @click="logout">
+            Fazer Login
+          </button>
+      </div>
+
       <div class="profile" v-if="isAuthenticated">
         <p>
           Seja bem-vindo(a), <span class="p-nome"> {{ fullName }} </span><br />
@@ -103,7 +113,6 @@
         </p>
       </div>
     </div>
-    <!-- <router-view class="mainContent"/> -->
     <router-view class="mainContent" />
   </div>
 </template>
@@ -117,24 +126,34 @@ export default {
     this.checkIfIsToHideBars();
     this.storeLoggedUser();
     this.getSubjects();
+    this.currentLocation = window.location.href;
+  },
+  beforeUpdate() {
+    this.storeLoggedUser();
+    
+    const params = this.$route.params;
+    if (params.hideBars !== undefined) {
+      this.hideBars = params.hideBars;
+    }
   },
   data() {
     return {
       componentKey: 0,
+      currentLocation: '',
       users: [],
       showModal: false,
       deleteUserId: -1,
       isAuthenticated: false,
-      fullName: "",
+      fullName: '',
       sessionUser: undefined,
       hideBars: false,
       searchCriterias: [
         { value: "subjects-subject-description", text: "Matéria" },
         { value: "categories-category-description", text: "Categoria" },
         { value: "users-author-name", text: "Autor" },
-        { value: "title", text: "Tema" },
+        { value: "title", text: "Título" },
       ],
-      currentCriteria: "",
+      currentCriteria: "title",
       currentSearchValue: "",
       subjectLinks: [],
       sideBarMenuLinks: [
@@ -164,6 +183,7 @@ export default {
     },
     storeLoggedUser() {
       let sessionUser = Helpers.getSessionUser();
+      console.log('sessionUser', sessionUser);
       if (sessionUser !== null) {
         this.isAuthenticated = true;
         this.sessionUser = sessionUser;
@@ -175,19 +195,25 @@ export default {
       }
     },
     logout() {
+<<<<<<< HEAD
       localStorage.setItem("token", null);
       this.$router.replace("login");
 
       this.isAuthenticated = false;
       this.sessionUser = undefined;
       this.fullName = "";
+=======
+      localStorage.setItem('sessionUser', null);
+      localStorage.setItem('token', null);
+      location.href = 'login';
+>>>>>>> 5b9d53a29f97ac092013713df8e1132b0e233f30
     },
     redirectToArticles() {
       location.href = `Articles?id=${this.sessionUser.id}`;
     },
 
     searchInArticles() {
-      location.href = `Articles?value=${this.currentSearchValue}&criteria=${this.currentCriteria}`;
+      location.href = `/?value=${this.currentSearchValue}&criteria=${this.currentCriteria}`;
     },
 
     buildSideMenuLinkPath(link) {

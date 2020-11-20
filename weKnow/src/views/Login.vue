@@ -53,7 +53,7 @@ export default {
                         console.log('UserServices.findByEmail response', response);
                         if(response.data && response.data.id) {
                             localStorage.setItem('sessionUser', JSON.stringify(response.data));
-                            this.$router.push({name: 'Home'});
+                            this.$router.push({name: 'Home', params: { hideBars: false }});
                         }
                     }).catch(err => {
                         var msgErro = err.response.data.err;
@@ -78,6 +78,7 @@ body{
 .default{
     background: #CCC8C8;
     min-height: 100%;
+    width: 100% !important;
     display: flex;
 }
 .box-login{
