@@ -15,8 +15,11 @@ class User{
     }
 
     async findById(id){
-        try{
-            var result = await knex.select(["id","email","role","name"]).where({id:id}).table("users");
+        try {
+            const columns = [
+                "id", "email", "role", "name", 'ra', 'course'
+            ];
+            var result = await knex.select(columns).where({id:id}).table("users");
             
             if(result.length > 0){
                 return result[0];

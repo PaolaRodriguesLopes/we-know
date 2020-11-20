@@ -70,7 +70,7 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/admin/users', name: 'Users', component: Users, beforeEnter: AdminAuth },
   { path: '/recoverpassword', name: 'RecoverPassword', component: RecoverPassword, },
-  { path: '/admin/users/edit/:id', name: 'UserEdit', component: Edit, beforeEnter: AdminAuth },
+  { path: '/users/edit/:id', name: 'UserEdit', component: Edit, beforeEnter: LoginAuth },
   
   // Article
   { path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: LoginAuth },

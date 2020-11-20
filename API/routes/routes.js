@@ -17,8 +17,8 @@ router.get('/', HomeController.index);
 router.post('/user', UserController.create);
 router.get('/user/email', UserController.findUserByEmail);
 router.get("/user", LoginAuth, UserController.index);
-router.get("/user/:id", AdminAuth, UserController.findUser);
-router.put("/user", AdminAuth, UserController.edit);
+router.get("/user/:id", LoginAuth, UserController.findUser);
+router.put("/user", LoginAuth, UserController.edit);
 router.delete("/user/:id", AdminAuth, UserController.remove);
 
 // Login and chenge password routes

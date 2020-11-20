@@ -1,97 +1,178 @@
 <template>
-    <div>
-        <h2 class="title">Edição de usuário</h2>    
+    <section>
+        <header>
+            <h2 class="title">Edição de usuário</h2>    
+        </header>
+
         <hr>
 
-        <div class="columns is-centered content-edit">
-            <div class="is-2 box foto-perfil">
-                <img src="../assets/users.png" class="imageUser" alt="Placeholder image" width=150px>
-            </div>
+        <div>
+            <div class="columns is-centered content-edit">
+                <div class="is-2 box foto-perfil">
+                    <img src="../assets/users.png" class="imageUser" alt="Placeholder image" width=150px>
+                </div>
 
+                <!-- notification error -->
+                <div class="column is-half box box-edit">
+                    <div v-if="error != undefined">
+                        <div class="notification is-danger">
+                            {{error}}
+                        </div>
+                    </div>
 
-            <div class="column is-half box box-edit">
-                <div v-if="error != undefined">
-                    <div class="notification is-danger">
-                        {{error}}
+                    <div>
+                        <label class="label-login"> Nome </label>
+                        <input type="text" placeholder="Nome do usuário" class="input" v-model="name">
+                    </div>
+
+                    <div>
+                        <label class="label-login"> Email </label>
+                        <input type="email" placeholder="email@email.com" class="input" v-model="email">
+                    </div>
+
+                    <div>
+                        <label class="label-login"> RA </label>
+                        <input type="text" placeholder="180000" class="input" v-model="ra">
+                    </div>
+
+                    <div>
+                        <label class="label-login"> Curso </label>
+                        <select class="input" v-model="course" required>
+                            <option value="" selected>Selecione um Curso</option>
+                            <option v-for="c in courses" :key="c.id" :value="c.id">
+                                {{c.description}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div v-if="sessionUser !== undefined && sessionUser.role === 1">
+                        <label class="label-login"> Cargo </label>
+                        <select class="input" v-model="role" required>
+                            <option value="" selected> Selecione um Cargo </option>
+                            <option v-for="r in roles" :key="r.value" :value="r.value">
+                                {{r.text}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <hr>
+                    
+                    <div class="btns">
+                        <button class="button is-outlined" @click="getBack()">
+                            Voltar
+                        </button>
+                        <button class="button is-success" @click="update">Salvar Edição</button>
                     </div>
                 </div>
-                
-                <label class="label-login">Nome</label>
-                <input type="text" placeholder="Nome do usuário" class="input" v-model="name">
-                
-                <label class="label-login">Email</label>
-                <input type="email" placeholder="email@email.com" class="input" v-model="email">
-                <hr>
-                
-                <div class="btns">
-                <router-link :to="{name: 'Users'}"><button class="button is-outlined">Voltar para usuários</button></router-link> &nbsp;
-                <button class="button is-success" @click="update">Salvar Edição</button>
-
-
-                
-                </div>
             </div>
-        </div>
-    </div>    
+        </div>    
+    </section>
+    
 </template>
 
 <script>
-import axios from 'axios';
-export default {
-    created(){
+    import CourseServices from '../js/services/CourseServices';
+    import Helpers from '../js/others/Helpers';
+    import UserServices from '../js/services/UserServices';
 
-
-        var req = {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem('token')
+    export default {
+        created(){
+            const previousLocation = this.$route.params.previousUrl;
+            if (previousLocation !== undefined) {
+                this.previousLocation = previousLocation;
             }
-        }
 
-        axios.get("http://localhost:8686/user/" + this.$route.params.id, req).then(res => {
-            console.log(res);
+            this.loadCourses();
+            this.checkSessionUser();
+        },
 
-            this.name = res.data.name;
-            this.email = res.data.email;
-            this.id = res.data.id;
-
-        }).catch(err => {
-            console.log(err.response);
-             this.$router.push({name: 'Users'});
-        })
-
-    },
-    data(){
-        return {
-            name: '',
-            email: '',
-            id: -1,
-            error: undefined,
-        }
-    },
-    methods: {
-        update(){
-
-            var req = {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem('token')
+        data(){
+            return {
+                id: -1,
+                name: '',
+                email: '',
+                ra: '',
+                course: '',
+                role: '',
+                error: undefined,
+                courses: [],
+                roles: [
+                    { value: 0, text: 'Usuário Comum' },
+                    { value: 1, text: 'Administrador' },
+                    { value: 2, text: 'Professor' },
+                ],
+                sessionUser: undefined,
+                previousLocation: '/'
+            }
+        },
+        methods: {
+            checkSessionUser() {
+                const sessionUser = Helpers.getSessionUser();
+                if (sessionUser !== null) {
+                    this.sessionUser = sessionUser;
+                    const selectedUserId = this.$route.params.id;
+                    if (selectedUserId !== undefined) {
+                        // caso ser usuario normal e tentar editar outro usuario
+                        if (sessionUser.role === 0 && (sessionUser.id != selectedUserId)) {
+                            this.$router.push({ name: 'Home' });
+                        }
+                        else {
+                            this.loadUser(selectedUserId);
+                        }
+                    }
                 }
+                else {
+                    this.$router.push({ name: 'Login' });
+                }
+            },
+
+            getBack() {
+                location.href = this.previousLocation;
+            },
+
+            loadCourses() {
+                CourseServices.getCourses().then(response => this.courses = response.data).catch (() => this.courses = []);
+            },
+
+            loadUser(id) {
+                UserServices.getById(id).then(response => {
+                    console.log(response);
+                    this.id = response.data.id;
+                    this.name = response.data.name;
+                    this.email = response.data.email;
+                    this.ra = response.data.ra;
+                    this.course = response.data.course;
+                    this.role = response.data.role;
+
+                }).catch(error => {
+                    console.log(error.response);
+                    this.$router.push({name: 'Users'});
+                });
+            },
+
+            update(){
+                const payload = {
+                    id: this.id,
+                    name: this.name,
+                    email: this.email,
+                    ra: this.ra,
+                    course: this.course, 
+                    role: this.role
+                };
+
+                UserServices.update(payload).then(response => {
+                    console.log(response);
+                    alert('Usuário atualizado com sucesso!');
+                    // this.$router.push({name: 'Users'});
+                    this.getBack();
+
+                }).catch(error => {
+                    alert('Erro ao atualizar o Usuário!');
+                    this.error = error.response.data.err;
+                });
             }
-
-
-            axios.put("http://localhost:8686/user",{
-                name: this.name,
-                email: this.email,
-                id: this.id
-            }, req).then(res => {
-                console.log(res);
-                this.$router.push({name: 'Users'});
-            }).catch(err => {
-                var msgErro = err.response.data.err;
-                this.error = msgErro;
-            })
         }
     }
-}
 </script>
 
 <style scoped>

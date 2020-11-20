@@ -23,6 +23,11 @@ class UserServices {
         const url = `${this.baseUrl}/email?value=${email}`;
         return await axios.get(url, request);
     }
+
+    async update(payload) {
+        const request = Helpers.getRequestWithHeader();
+        return await axios.put(this.baseUrl, payload, request);
+    }
 }
 
 module.exports = new UserServices();

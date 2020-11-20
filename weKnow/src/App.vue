@@ -103,8 +103,8 @@
       <div class="profile" v-if="isAuthenticated">
         <p>
           Seja bem-vindo(a), <span class="p-nome"> {{ fullName }} </span><br />
-          <a href="#"> Editar Perfil </a> -
-          <a @click="logout" href=""> Sair </a>
+          <a @click="editProfile();"> Editar Perfil </a> -
+          <a @click="logout();"> Sair </a>
         </p>
       </div>
     </div>
@@ -223,6 +223,10 @@ export default {
         })
         .catch(() => (this.subjectLinks = []));
     },
+
+    editProfile() {
+      this.$router.push({ name: 'UserEdit', params: { id: this.sessionUser.id, previousUrl: this.currentLocation } });
+    }
   },
   filters: {
     processRole: function (value) {
