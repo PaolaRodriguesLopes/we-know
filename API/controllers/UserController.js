@@ -41,7 +41,7 @@ class UserController{
     }
 
     async create(req,res){
-       var {email,name, password,course,ra} = req.body;
+       var {email,name, password,course,ra,role} = req.body;
 
         if (email == undefined || email == '' || email == ' '){
             res.status(400);
@@ -85,8 +85,10 @@ class UserController{
             res.json({err:"O RA já está cadastrado !"});
             return;
         }
+
+        role = (role !== undefined ? role : 0);
         
-        await User.new(email,password,name,course,ra);
+        await User.new(email,password,name,course,ra, role);
 
         res.status(200);
         
