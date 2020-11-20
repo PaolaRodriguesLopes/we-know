@@ -1,7 +1,7 @@
 <template>
     <section>
         <header>
-            <h2 class="title">Edição de usuário</h2>    
+            <h2 class="title"> {{ headerTitle }} </h2>    
         </header>
 
         <hr>
@@ -61,7 +61,9 @@
                         <button class="button is-outlined" @click="getBack()">
                             Voltar
                         </button>
-                        <button class="button is-success" @click="update">Salvar Edição</button>
+                        <button class="button is-success" @click="save();">
+                            Salvar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -103,7 +105,8 @@
                     { value: 2, text: 'Professor' },
                 ],
                 sessionUser: undefined,
-                previousLocation: '/'
+                previousLocation: '/',
+                headerTitle: ''
             }
         },
         methods: {
@@ -113,6 +116,7 @@
                     this.sessionUser = sessionUser;
                     const selectedUserId = this.$route.params.id;
                     if (selectedUserId !== undefined) {
+                        this.headerTitle = 'Edição de Usuário';
                         // caso ser usuario normal e tentar editar outro usuario
                         if (sessionUser.role === 0 && (sessionUser.id != selectedUserId)) {
                             this.$router.push({ name: 'Home' });
@@ -120,6 +124,9 @@
                         else {
                             this.loadUser(selectedUserId);
                         }
+                    }
+                    else {
+                        this.headerTitle = 'Novo Usuário';
                     }
                 }
                 else {
@@ -151,7 +158,7 @@
                 });
             },
 
-            update(){
+            save() {
                 const payload = {
                     id: this.id,
                     name: this.name,
@@ -161,6 +168,28 @@
                     role: this.role
                 };
 
+                if (this.id === -1) {
+                    this.insert(payload);
+                }
+                else {
+                    this.update(payload);
+                }
+            },
+
+            insert(payload){
+                payload.password = 'criado por admin';
+
+                UserServices.insert(payload).then(response => {
+                    console.log(response);
+                    alert('Usuário criado com sucesso!');
+                    this.getBack();
+
+                }).catch(error => {
+                    this.error = error.response.data;
+                });
+            },
+
+            update(payload){
                 UserServices.update(payload).then(response => {
                     console.log(response);
                     alert('Usuário atualizado com sucesso!');
