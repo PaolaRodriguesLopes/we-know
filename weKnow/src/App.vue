@@ -45,7 +45,8 @@
                 Gerenciar Matérias
               </router-link>
             </li>
-             <li v-if="sessionUser.role === 1">
+
+            <li v-if="sessionUser.role === 1">
               <router-link :to="{ name: 'Users' }">
                 Gerenciar Usuários
               </router-link>
