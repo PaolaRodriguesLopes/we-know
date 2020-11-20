@@ -95,7 +95,7 @@
       </div>
 
       <div class="mx-5 my-2" v-if="!isAuthenticated">
-          <button type="button" class="button is-info is-outlined" @click="logout">
+          <button type="button" class="button is-info is-outlined" @click="logout();">
             Fazer Login
           </button>
       </div>
@@ -103,8 +103,8 @@
       <div class="profile" v-if="isAuthenticated">
         <p>
           Seja bem-vindo(a), <span class="p-nome"> {{ fullName }} </span><br />
-          <a href="#"> Editar Perfil </a> -
-          <a @click="logout" href=""> Sair </a>
+          <a @click="editProfile();"> Editar Perfil </a> -
+          <a @click="logout();"> Sair </a>
         </p>
       </div>
     </div>
@@ -130,6 +130,8 @@ export default {
     if (params.hideBars !== undefined) {
       this.hideBars = params.hideBars;
     }
+
+    this.currentLocation = window.location.href;
   },
   data() {
     return {
@@ -192,7 +194,7 @@ export default {
     logout() {
       localStorage.setItem('sessionUser', null);
       localStorage.setItem('token', null);
-      location.href = 'login';
+      location.href = '/login';
     },
     redirectToArticles() {
       location.href = `Articles?id=${this.sessionUser.id}`;
@@ -223,6 +225,10 @@ export default {
         })
         .catch(() => (this.subjectLinks = []));
     },
+
+    editProfile() {
+      this.$router.push({ name: 'UserEdit', params: { id: this.sessionUser.id, previousUrl: this.currentLocation } });
+    }
   },
   filters: {
     processRole: function (value) {

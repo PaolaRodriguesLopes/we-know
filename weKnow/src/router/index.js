@@ -27,40 +27,39 @@ function AdminAuth(to, from, next) {
         console.log(response);
         next();
     }).catch((error) => {
+        Helpers.resetSessionUser();
         console.log(error.response);
         next(loginUrl);
       });
   }
   else {
+    Helpers.resetSessionUser();
     next(loginUrl);
   }
 }
 
 function LoginAuth(to, from, next) {
   const homeUrl = '/home';
-  let sessionUser = localStorage.getItem('sessionUser');
-  if (sessionUser != undefined) {
-    sessionUser = JSON.parse(sessionUser);
-    if (sessionUser.role == 0 || sessionUser.role == 1 || sessionUser.role == 2) {
-      next();
-    }
-    else {
-      next(homeUrl);
-    }
+  const token = localStorage.getItem('token');
+  if (token != undefined) {
+    const request = Helpers.getRequestWithHeader();
+    const url = 'http://localhost:8686/validateLogin';
+    axios.post(url, {}, request).then ((response) => {
+        console.log(response);
+        next();
+    }).catch((error) => {
+        Helpers.resetSessionUser();
+        console.log(error.response);
+        next(homeUrl);
+      });
   }
   else {
+    Helpers.resetSessionUser();
     next(homeUrl);
   }
 }
 
-
 Vue.use(VueRouter)
-
-// Surpress route exception
-/*const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err);
-};*/
 
 const routes = [
 
@@ -70,7 +69,7 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/admin/users', name: 'Users', component: Users, beforeEnter: AdminAuth },
   { path: '/recoverpassword', name: 'RecoverPassword', component: RecoverPassword, },
-  { path: '/admin/users/edit/:id', name: 'UserEdit', component: Edit, beforeEnter: AdminAuth },
+  { path: '/users/edit/:id', name: 'UserEdit', component: Edit, beforeEnter: LoginAuth },
   
   // Article
   { path: '/new-article', name: 'InsertArticle', component: ArticleInsertUpdate, beforeEnter: LoginAuth },

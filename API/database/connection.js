@@ -16,9 +16,9 @@ var knex = require('knex')({
     host : '127.0.0.1',
     //host: 'localhost',
     user : 'root',
-     password: 'root',
+    //  password: 'root',
     // password: '1234',
-    //password: '',
+    password: '',
     database : 'weknow'
   }
 });

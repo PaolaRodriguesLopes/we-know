@@ -45,7 +45,9 @@
                 <td>{{user.email}}</td>
                 <td>{{ user.role | processRole }}</td>
                 <td>
-                    <router-link :to="{name: 'UserEdit', params:{id: user.id}}"><button class="button is-success">Editar</button></router-link>&nbsp; &nbsp; 
+                    <router-link :to="{name: 'UserEdit', params:{ id: user.id, previousUrl: currentLocation }}">
+                        <button class="button is-success"> Editar </button>
+                    </router-link>&nbsp; &nbsp; 
                     <button class="button is-danger" @click="showModalUser(user.id)">Deletar</button></td>
             </tr>
         </tbody>
@@ -89,6 +91,8 @@ import axios from 'axios';
 export default {
     created(){
 
+        this.currentLocation = window.location.href;
+
         var req = {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('token')
@@ -107,7 +111,8 @@ export default {
         return {
             users: [],
             showModal: false,
-            deleteUserId: -1
+            deleteUserId: -1,
+            currentLocation: ''
         }
     },
     methods: {
