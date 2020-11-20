@@ -95,7 +95,7 @@
       </div>
 
       <div class="mx-5 my-2" v-if="!isAuthenticated">
-          <button type="button" class="button is-info is-outlined" @click="logout">
+          <button type="button" class="button is-info is-outlined" @click="logout();">
             Fazer Login
           </button>
       </div>
@@ -130,6 +130,8 @@ export default {
     if (params.hideBars !== undefined) {
       this.hideBars = params.hideBars;
     }
+
+    this.currentLocation = window.location.href;
   },
   data() {
     return {
@@ -146,7 +148,7 @@ export default {
         { value: "subjects-subject-description", text: "Matéria" },
         { value: "categories-category-description", text: "Categoria" },
         { value: "users-author-name", text: "Autor" },
-        { value: "title", text: "Tema" },
+        { value: "title", text: "Título" },
       ],
       currentCriteria: "title",
       currentSearchValue: "",
@@ -192,7 +194,7 @@ export default {
     logout() {
       localStorage.setItem('sessionUser', null);
       localStorage.setItem('token', null);
-      location.href = 'login';
+      location.href = '/login';
     },
     redirectToArticles() {
       location.href = `Articles?id=${this.sessionUser.id}`;

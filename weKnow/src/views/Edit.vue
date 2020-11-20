@@ -78,6 +78,7 @@
     export default {
         created(){
             const previousLocation = this.$route.params.previousUrl;
+            console.log('previousLocation', previousLocation);
             if (previousLocation !== undefined) {
                 this.previousLocation = previousLocation;
             }
