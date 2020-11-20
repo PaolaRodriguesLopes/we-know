@@ -32,17 +32,23 @@
           <div v-if="sessionUser">
             <li v-if="sessionUser.role === 1">
               <router-link :to="{ name: 'Categories' }">
-                Adicionar Categoria
+                Gerenciar Categorias
               </router-link>
             </li>
             <li v-if="sessionUser.role === 1">
               <router-link :to="{ name: 'Courses' }">
-                Adicionar Curso
+                Gerenciar Cursos
               </router-link>
             </li>
             <li v-if="sessionUser.role === 1">
               <router-link :to="{ name: 'Subjects' }">
-                Adicionar Matéria
+                Gerenciar Matérias
+              </router-link>
+            </li>
+
+            <li v-if="sessionUser.role === 1">
+              <router-link :to="{ name: 'Users' }">
+                Gerenciar Usuários
               </router-link>
             </li>
           </div>
@@ -171,6 +177,10 @@ export default {
     logout() {
       localStorage.setItem("token", null);
       this.$router.replace("login");
+
+      this.isAuthenticated = false;
+      this.sessionUser = undefined;
+      this.fullName = "";
     },
     redirectToArticles() {
       location.href = `Articles?id=${this.sessionUser.id}`;
