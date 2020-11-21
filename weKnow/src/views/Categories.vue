@@ -21,20 +21,20 @@
             <div class="table-container">
                 <table class="table is-bordered is-fullwidth is-stripped">
                     <thead>
-                        <tr>
+                        <tr class="headTable">
                             <th width="80%"> Descrição</th>
                             <th> Ações </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="textTable">
                         <tr v-for="cat in categories" :key="cat.id">
                             <td> {{ cat.description }} </td>
                             <td>  
                                 <button type="button" class="button is-success mx-1" @click="showEditModalCategory(cat.id);">
-                                    Editar
+                                    <font-awesome-icon icon="edit" title="Editar Categoria" />
                                 </button>
                                 <button type="button" class="button is-danger mx-1" @click="showDeleteModalCategory(cat.id);">
-                                    Deletar
+                                   <font-awesome-icon icon="trash" title="Remover Categoria" />
                                 </button>
                             </td>
                         </tr>

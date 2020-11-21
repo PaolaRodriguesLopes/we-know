@@ -12,23 +12,23 @@
             <div class="table-container">
                 <table class="table is-bordered is-fullwidth is-striped">
                     <thead>
-                        <tr>
+                        <tr class="headTable">
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Cargo</th>
                         <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="textTable">
                         <tr v-for="user in users" :key="user.id">
                             <td class="nameItem">{{user.name}}</td>
                             <td>{{user.email}}</td>
                             <td>{{ user.role | processRole }}</td>
                             <td>
                                 <router-link :to="{name: 'UserEdit', params:{ id: user.id, previousUrl: currentLocation }}">
-                                    <button class="button is-success"> Editar </button>
+                                    <button class="button is-success"> <font-awesome-icon icon="edit" title="Editar Usuário" /> </button>
                                 </router-link>&nbsp; &nbsp; 
-                                <button class="button is-danger" @click="showModalUser(user.id)">Deletar</button></td>
+                                <button class="button is-danger" @click="showModalUser(user.id)"><font-awesome-icon icon="trash" title="Remover Usuário" /></button></td>
                         </tr>
                     </tbody>
                 </table>

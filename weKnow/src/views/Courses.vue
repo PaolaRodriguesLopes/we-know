@@ -22,22 +22,22 @@
             <div class="table-container">
                 <table class="table is-bordered is-fullwidth is-stripped">
                     <thead>
-                        <tr>
+                        <tr class="headTable">
                         <th width="60%"> Descrição </th>
                             <th width="10%">Duração</th>
                             <th> Ações </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="textTable">
                         <tr v-for="course in courses" :key="course.id">
                             <td> {{ course.description }} </td>
                             <td> {{ course.duration }} </td>
                             <td>  
                                 <button type="button" class="button is-success mx-1" @click="showEditModalCourse(course.id);">
-                                    Editar
+                                   <font-awesome-icon icon="edit" title="Editar Curso" />
                                 </button>
                                 <button type="button" class="button is-danger mx-1" @click="showDeleteModalCourse(course.id);">
-                                    Deletar
+                                    <font-awesome-icon icon="trash" title="Remover Curso" />
                                 </button>
                             </td>
                         </tr>
