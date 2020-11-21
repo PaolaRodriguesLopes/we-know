@@ -24,9 +24,16 @@
               Publicado às {{ art.last_changed | formatDatetime }}
             </p>
           </div>
+          <router-link
+                  :to="{
+                    name: 'ArticleDetails',
+                    params: { id: art.id, lastPath: currentLocation },
+                  }"
+                >
           <button type="button" class="button is-info mx-1 my-1 is-small">
             Detalhes
           </button>
+          </router-link>
         </div>
       </div>
     </div>
