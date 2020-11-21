@@ -79,3 +79,31 @@ thead {
   background-color: #671313;
 }
 
+.buttonsActions{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Articles */
+.textModify{
+  font-size:12px; 
+  width:90px;
+  vertical-align:middle !important;
+}
+
+.textStatus{
+  font-size: 12px;
+  width: 120px;
+  vertical-align:middle !important;
+}
+
+.textTitle{
+  font-size: 12px;
+  width: 45%;
+  vertical-align:middle !important;
+}
+
+.headTable{
+  background: #ddd;
+}
+
