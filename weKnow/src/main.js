@@ -9,7 +9,10 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faHandPaper } from '@fortawesome/free-solid-svg-icons'
+import { faBook } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+
 
 library.add(faCoffee)
 library.add(faEye)
@@ -17,6 +20,7 @@ library.add(faEdit)
 library.add(faTrash)
 library.add(faCheck)
 library.add(faHandPaper)
+library.add(faBook)
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
