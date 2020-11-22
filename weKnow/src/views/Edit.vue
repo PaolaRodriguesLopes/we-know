@@ -174,7 +174,7 @@
                     return false;
                 }
 
-                if (this.course === '' || this.course === 0) {
+                if (this.course === '' || this.course === 0 || this.course === '0') {
                     alert('Informe o Curso!');
                     return false;
                 }

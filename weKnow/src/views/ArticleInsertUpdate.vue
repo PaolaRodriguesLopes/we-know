@@ -182,12 +182,12 @@ export default {
         return false;
       }
 
-      if (this.category === '' || this.category === 0) {
+      if (this.category === '' || this.category === 0 || this.category === '0') {
         alert('Informe a categoria!');
         return false;
       }
 
-      if (this.subject === '' || this.subject === 0) {
+      if (this.subject === '' || this.subject === 0 || this.subject === '0') {
         alert('Informe a matéria!');
         return false;
       }
