@@ -18,8 +18,8 @@
         <div class="card-content">
           <div class="content">
             <p>{{ art.description }}</p>
-            <span class="author"> Autor: </span> {{ art.author }} <br />
-            <span class="author"> Categoria: </span> {{ art.category }}
+            <span class="author"> Autor: </span> {{ art.author_name }} <br />
+            <span class="author"> Categoria: </span> {{ art.category_description }}
             <p class="is-italic">
               Publicado às {{ art.last_changed | formatDatetime }}
             </p>

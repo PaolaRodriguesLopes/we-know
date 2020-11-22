@@ -166,26 +166,58 @@ export default {
   },
 
   methods: {
+    validation() {
+      if (this.title === '' || this.title.length === 0) {
+        alert('Informe o título!');
+        return false;
+      }
+
+      if (this.description === '' || this.description.length === 0) {
+        alert('Informe a descrição!');
+        return false;
+      }
+
+      if (this.text === '' || this.text.length === 0) {
+        alert('Informe o texto!');
+        return false;
+      }
+
+      if (this.category === '' || this.category === 0) {
+        alert('Informe a categoria!');
+        return false;
+      }
+
+      if (this.subject === '' || this.subject === 0) {
+        alert('Informe a matéria!');
+        return false;
+      }
+
+      return true;
+    },
+
+
     save() {
-      const payload = {
-        id: this.id,
-        description: this.description,
-        status_article: this.status_article,
-        subject: this.subject,
-        text: this.text,
-        title: this.title,
-        author: this.author,
-        category: this.category,
-      };
+      if (this.validation()) {
+        const payload = {
+          id: this.id,
+          description: this.description,
+          status_article: this.status_article,
+          subject: this.subject,
+          text: this.text,
+          title: this.title,
+          author: this.author,
+          category: this.category,
+        };
 
-      console.log("payload", payload);
+        console.log("payload", payload);
 
-      if (this.id === -1) {
-        payload.author = getSessionUser().id;
-        this.insert(payload);
-      } else {
-        payload.status_article = 0;
-        this.update(payload);
+        if (this.id === -1) {
+          payload.author = getSessionUser().id;
+          this.insert(payload);
+        } else {
+          payload.status_article = 0;
+          this.update(payload);
+        }
       }
     },
 

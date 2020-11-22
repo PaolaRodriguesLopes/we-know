@@ -158,21 +158,52 @@
                 });
             },
 
-            save() {
-                const payload = {
-                    id: this.id,
-                    name: this.name,
-                    email: this.email,
-                    ra: this.ra,
-                    course: this.course, 
-                    role: this.role
-                };
-
-                if (this.id === -1) {
-                    this.insert(payload);
+            validation() {
+                if (this.name === '' || this.name.length === 0) {
+                    alert('Informe o Nome!');
+                    return false;
                 }
-                else {
-                    this.update(payload);
+
+                if (this.email === '' || this.email.length === 0) {
+                    alert('Informe o Email!');
+                    return false;
+                }
+
+                if (this.ra === '' || this.ra.length === 0) {
+                    alert('Informe o RA!');
+                    return false;
+                }
+
+                if (this.course === '' || this.course === 0) {
+                    alert('Informe o Curso!');
+                    return false;
+                }
+
+                if (this.role === '' || this.role === -1) {
+                    alert('Informe o Cargo!');
+                    return false;
+                }
+
+                return true;
+            },
+
+            save() {
+                if (this.validation()) {
+                    const payload = {
+                        id: this.id,
+                        name: this.name,
+                        email: this.email,
+                        ra: this.ra,
+                        course: this.course, 
+                        role: this.role
+                    };
+
+                    if (this.id === -1) {
+                        this.insert(payload);
+                    }
+                    else {
+                        this.update(payload);
+                    }
                 }
             },
 

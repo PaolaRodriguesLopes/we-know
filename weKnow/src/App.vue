@@ -156,13 +156,13 @@ export default {
       subjectLinks: [],
       sideBarMenuLinks: [
         {
-          path: "Articles",
+          path: "/Articles",
           value: 1,
           text: "Aprovado por mim",
           criteria: "author_status",
         },
         {
-          path: "Articles",
+          path: "/Articles",
           value: 0,
           text: "Aguardando Aprovação",
           criteria: "status_article",
@@ -198,7 +198,7 @@ export default {
       location.href = '/login';
     },
     redirectToArticles() {
-      location.href = `Articles?id=${this.sessionUser.id}`;
+      location.href = `/Articles?id=${this.sessionUser.id}`;
     },
 
     searchInArticles() {

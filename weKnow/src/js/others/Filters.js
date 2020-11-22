@@ -67,7 +67,7 @@ class Filters {
      }
 
     static formatDatetime(value) {
-        return moment(value).format('DD/MM/YYYY hh:mm');
+        return moment(value).format('DD/MM/YYYY HH:mm');
     }
 }
 

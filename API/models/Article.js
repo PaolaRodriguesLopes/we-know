@@ -8,9 +8,9 @@ class Article {
     constructor() {
         this.allColumns = [
             "articles.id", "articles.title", "articles.description", "articles.text",
-            "categories.id as category_id", "categories.description as category",
-            "users.name as author", "users.id as author_id",
-            "subjects.description as subject", "subjects.id as subject_id",
+            "categories.id as category_id", "categories.description as category_description",
+            "users.name as author_name", "users.id as author_id",
+            "subjects.description as subject_description", "subjects.id as subject_id",
             "articles.published_date", "articles.last_changed", "articles.status_article",
             "articles.comments"
         ];
@@ -42,8 +42,18 @@ class Article {
 
                 console.log(table, column, key, value);
 
-                result = await knex.select('articles.*').from('articles')
-                    .leftJoin(table, `articles.${key}`, `${table}.id`)
+                const columns = [
+                    'articles.*',
+                    'categories.id as category_id', 'categories.description as category_description',
+                    'users.id as author_id', 'users.name as author_name',
+                    'subjects.id as subject_id', 'subjects.description as subject_description',
+                ];
+
+                result = await knex.select(columns).from('articles')
+                    .leftJoin('categories', 'articles.category', 'categories.id')
+                    .leftJoin('users', 'articles.author', 'users.id')
+                    .leftJoin('subjects', 'articles.subject', 'subjects.id')
+                    // .leftJoin(table, `articles.${key}`, `${table}.id`)
                     .where(`${table}.${column}`, 'like', `%${value}%`)
                     .andWhere('articles.status_article', 1);
             }
