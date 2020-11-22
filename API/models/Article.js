@@ -128,6 +128,22 @@ class Article {
         }
     }
 
+    async findByApprovedBy(approvedById) {
+        try {
+            var result = await knex('articles')
+                .join('categories', 'articles.category', 'categories.id')
+                .join('users', 'articles.author', 'users.id')
+                .join('subjects', 'articles.subject', 'subjects.id')
+                .select(this.allColumns).where('articles.approved_by', approvedById)
+                .andWhere('articles.status_article', 1);
+
+            return result;
+        } catch (err) {
+            console.log(err);
+            return [];
+        }
+    }
+
     async new(title, description, text, category, author, subject) {
         try {
             const payload = {

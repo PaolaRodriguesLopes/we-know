@@ -283,10 +283,14 @@ export default {
           const value = params.get("value");
           console.log("value", value, "criteria", criteria);
 
-          if (criteria !== "author_status") {
-            this.findByValueAndCriteria(value, criteria);
-          } else {
+          if (criteria === "author_status") {
             this.findByAuthorWhereStatusIs(this.sessionUser.id, value);
+          }
+          else if (criteria === 'approved_by') {
+            this.findByApprovedBy(this.sessionUser.id);
+          }
+          else {
+            this.findByValueAndCriteria(value, criteria);
           }
         } else {
           this.findAll();
@@ -320,6 +324,12 @@ export default {
 
     findByAuthorWhereStatusIs(authorId, statusArticle) {
       ArticleServices.findByAuthorWhereStatusIs(authorId, statusArticle)
+        .then((response) => (this.articles = response.data))
+        .catch(() => (this.articles = []));
+    },
+
+    findByApprovedBy(approvedById) {
+      ArticleServices.findByApprovedBy(approvedById)
         .then((response) => (this.articles = response.data))
         .catch(() => (this.articles = []));
     },

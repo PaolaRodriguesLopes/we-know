@@ -40,6 +40,13 @@ class ArticleController {
         response.json(articles);
     }
 
+    async findByApprovedBy(request, response) {
+        var approvedById = request.query.approvedById;
+        console.log('approvedById', approvedById);
+        var articles = await Article.findByApprovedBy(approvedById);
+        response.json(articles);
+    }
+
     async create(req, res) {
         var { title, description, text, category, author, subject } = req.body;
 

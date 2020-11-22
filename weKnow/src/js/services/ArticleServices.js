@@ -48,6 +48,13 @@ class ArticleServices {
         return await axios.get(url, { params: params }, request);
     }
 
+    async findByApprovedBy(approvedById) {
+        const request = Helpers.getRequestWithHeader();
+        const url = `${this.baseUrl}/approved-by`;
+        const params = { approvedById: approvedById };
+        return await axios.get(url, { params: params }, request);
+    }
+
     async remove(id) {
         const request = Helpers.getRequestWithHeader();
         const url = `${this.baseUrl}/${id}`;

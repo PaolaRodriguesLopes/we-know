@@ -54,6 +54,7 @@ router.post('/article', LoginAuth, ArticleController.create);
 router.get("/article", ArticleController.getArticles);
 router.get("/article/custom", ArticleController.findByValueAndCriteria);
 router.get("/article/author-status", ArticleController.findByAuthorWhereStatusIs);
+router.get("/article/approved-by", ArticleController.findByApprovedBy);
 router.get("/article/:id", ArticleController.getArticleByID);
 router.get("/article/author/:id", ArticleController.findByAuthor);
 router.put("/article", LoginAuth, ArticleController.edit);

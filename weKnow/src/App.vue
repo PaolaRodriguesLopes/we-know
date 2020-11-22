@@ -159,7 +159,7 @@ export default {
           path: "/Articles",
           value: 1,
           text: "Aprovado por mim",
-          criteria: "author_status",
+          criteria: "approved_by",
         },
         {
           path: "/Articles",
