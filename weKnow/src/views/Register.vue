@@ -52,7 +52,7 @@
 import axios from 'axios';
 export default {
     created(){
-        axios.get("http://localhost:8686/course").then(res => {
+        axios.get("https://we-know-backend.herokuapp.com/course").then(res => {
             this.getCourses = res.data;
         }).catch(err => {
             console.log(err);
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         register(){
-            axios.post("http://localhost:8686/user",{
+            axios.post("https://we-know-backend.herokuapp.com//user",{
                 name: this.name,
                 password: this.password,
                 ra: this.ra,

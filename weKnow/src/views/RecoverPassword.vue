@@ -72,7 +72,7 @@ export default {
   methods: {
     recover() {
       axios
-        .post("http://localhost:8686/recoverpassword", {
+        .post("https://we-know-backend.herokuapp.com//recoverpassword", {
           email: this.email,
         })
         .then((res) => {
@@ -92,7 +92,7 @@ export default {
 
     saveNewPassword() {
       axios
-        .post("http://localhost:8686/changepassword", {
+        .post("https://we-know-backend.herokuapp.com//changepassword", {
           email: this.email,
           password: this.password,
           token: this.token,

@@ -22,7 +22,7 @@ function AdminAuth(to, from, next) {
   const token = localStorage.getItem('token');
   if (token != undefined) {
     const request = Helpers.getRequestWithHeader();
-    const url = 'http://localhost:8686/validate';
+    const url = 'https://we-know-backend.herokuapp.com/validate';
     axios.post(url, {}, request).then ((response) => {
         console.log(response);
         next();
@@ -43,7 +43,7 @@ function LoginAuth(to, from, next) {
   const token = localStorage.getItem('token');
   if (token != undefined) {
     const request = Helpers.getRequestWithHeader();
-    const url = 'http://localhost:8686/validateLogin';
+    const url = 'https://we-know-backend.herokuapp.com/validateLogin';
     axios.post(url, {}, request).then ((response) => {
         console.log(response);
         next();

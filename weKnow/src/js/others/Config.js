@@ -1,4 +1,5 @@
 
 module.exports = {
-    API_URL: 'http://localhost:8686'
+    // API_URL: 'https://we-know-backend.herokuapp.com/'
+    API_URL: 'https://we-know-backend.herokuapp.com'
 };

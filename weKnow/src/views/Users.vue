@@ -81,7 +81,7 @@ export default {
             }
         }
 
-        axios.get("http://localhost:8686/user",req).then(res => {
+        axios.get("https://we-know-backend.herokuapp.com//user",req).then(res => {
             console.log(res);
             this.users = res.data;
         }).catch(err => {
@@ -113,7 +113,7 @@ export default {
                 }
             }
 
-            axios.delete("http://localhost:8686/user/"+this.deleteUserId, req).then(res => {
+            axios.delete("https://we-know-backend.herokuapp.com//user/"+this.deleteUserId, req).then(res => {
                 console.log(res);
                 this.showModal = false;
                 this.users = this.users.filter(u => u.id != this.deleteUserId);
