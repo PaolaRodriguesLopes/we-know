@@ -40,8 +40,6 @@ class Article {
                 const key = criteria[1];
                 const column = criteria[2];
 
-                console.log(table, column, key, value);
-
                 const columns = [
                     'articles.*',
                     'categories.id as category_id', 'categories.description as category_description',

@@ -42,7 +42,6 @@ class ArticleController {
 
     async findByApprovedBy(request, response) {
         var approvedById = request.query.approvedById;
-        console.log('approvedById', approvedById);
         var articles = await Article.findByApprovedBy(approvedById);
         response.json(articles);
     }

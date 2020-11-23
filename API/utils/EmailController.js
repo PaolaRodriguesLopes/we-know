@@ -6,8 +6,6 @@ var fs = require('fs');
 class EmailController {
     async sendEmail(emailTo, tokenCode) {
 
-        console.log("emailTo === ", emailTo);
-        console.log("tokenCode == ", tokenCode);
         var readHTMLFile = function (path, callback) {
             fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
                 if (err) {

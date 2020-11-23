@@ -70,8 +70,6 @@ class UserController{
         var emailExists = await User.findEmail(email);
         var raExists = await User.findRA(ra);
 
-        console.log(emailExists);
-
         if (emailExists){
             //nao aceitavel
             res.status(406);
