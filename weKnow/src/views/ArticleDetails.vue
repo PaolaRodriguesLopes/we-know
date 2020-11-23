@@ -1,25 +1,26 @@
 <template>
     <article>
+        <h1 class="is-size-5 has-text-weight-bold tituloPrincipal"> <font-awesome-icon icon="book" style="margin-right: 10px" /> {{ title }} </h1>
         <div class="box">
+            
             <div class="content">
-                <header>
-                    <h1> {{ title }} </h1>
-                    <h6 class="has-text-right is-italic"> {{ author }} </h6>
-                </header>
-
-                <hr>
-                
+                                                
                 <div class="other">
                     <header>
                         <h3> {{ subject }} </h3>
                     </header>
                     
                     <p class="is-italic is-family-sans-serif"> {{ description }} </p>
-                    <p> {{ text }} </p>
+                    <p class="texto" > {{ text }} </p>
+
+                    <div class="info-article">
                     <p>
+                        <span class="has-text-weight-bold">Categoria: </span> {{ category }} <br>
+                        <span class="has-text-weight-bold">Autor: </span> {{ author }} <br>
                         Publicado às <span class="has-text-weight-bold"> {{ published_date | formatDatetime }}, </span>
                         última modificação feita às <span class="has-text-weight-bold"> {{ last_changed | formatDatetime }} </span>
                     </p>
+                    </div>
                 </div>
 
                 <hr>
@@ -49,8 +50,8 @@
                 console.log('response get article', response);
                 const article = response.data;
                 if (article && article.id) {
-                    this.author = article.author;
-                    this.category = article.category;
+                    this.author = article.author_name;
+                    this.category = article.category_description;
                     this.description = article.description;
                     this.last_changed = article.last_changed;
                     this.published_date = article.published_date;
@@ -85,3 +86,31 @@
         }
     }
 </script>
+
+<style scoped>
+.tituloPrincipal {
+  background: #292525;
+  padding: 10px;
+  margin: 0;
+  color: #fff;
+}
+
+.box{
+    padding-top:0;
+}
+
+.texto{
+    text-align: justify;
+    padding: 20px;
+    text-indent: 50px;
+}
+
+.info-article{
+    background: #ddd;
+    text-align: left;
+    padding: 15px;
+    line-height: 30px;
+    border: 1px dashed #999;
+}
+
+</style>
