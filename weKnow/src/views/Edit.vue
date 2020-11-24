@@ -209,6 +209,7 @@
                 payload.password = 'criado por admin';
 
                 UserServices.insert(payload).then(response => {
+                    console.log(response);
                     alert('Usuário criado com sucesso!');
                     this.getBack();
 
@@ -219,6 +220,7 @@
 
             update(payload){
                 UserServices.update(payload).then(response => {
+                    console.log(response);
                     alert('Usuário atualizado com sucesso!');
                     this.getBack();
 

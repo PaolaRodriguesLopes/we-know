@@ -24,6 +24,7 @@ function AdminAuth(to, from, next) {
     const request = Helpers.getRequestWithHeader();
     const url = 'http://localhost:8686/validate';
     axios.post(url, {}, request).then ((response) => {
+      console.log(response);
         next();
     }).catch((error) => {
         Helpers.resetSessionUser();
@@ -44,6 +45,7 @@ function LoginAuth(to, from, next) {
     const request = Helpers.getRequestWithHeader();
     const url = 'http://localhost:8686/validateLogin';
     axios.post(url, {}, request).then ((response) => {
+      console.log(response);
         next();
     }).catch((error) => {
         Helpers.resetSessionUser();

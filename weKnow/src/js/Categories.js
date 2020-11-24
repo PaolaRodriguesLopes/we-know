@@ -48,6 +48,7 @@ export default {
                     alert('Erro ao buscar a categoria!');
                 }
             }).catch(error => {
+                console.log(error);
                 alert('Erro ao buscar a categoria!');
             });
         },
