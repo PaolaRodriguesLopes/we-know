@@ -79,7 +79,6 @@ export default {
                 email: this.email
             }).then(res => {
                 alert('Registro criado com sucesso!');
-                console.log(res);
                 this.$router.push({name: 'Login'});
             }).catch(err => {
                 alert('Erro ao criar o registro');

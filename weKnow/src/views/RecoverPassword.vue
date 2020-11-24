@@ -79,8 +79,6 @@ export default {
           this.status = res.status;
           this.error = false;
           document.getElementById("box-login").style.height = "500px";
-          //localStorage.setItem('token',res.data.token);
-          //this.$router.push({name: 'Home'});
         })
         .catch((err) => {
           console.log(err);
@@ -100,10 +98,8 @@ export default {
         .then((res) => {
           this.status = res.status;
           document.getElementById("box-login").style.height = "500px";
-          console.log("senha trocada");
           this.error = false;
           alert("Senha atualizada com sucesso!");
-          //localStorage.setItem('token',res.data.token);
           this.$router.push({ name: "Login" });
         })
         .catch((err) => {

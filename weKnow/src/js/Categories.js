@@ -21,7 +21,6 @@ export default {
     methods: {
         findAll() {
             CategoryServices.getCategories().then(response => {
-                console.log('response get category', response);
                 this.categories = response.data;
             }).catch(error => { 
                 console.log('error get category', error);
@@ -40,7 +39,6 @@ export default {
 
         showEditModalCategory(id) {
             CategoryServices.getById(id).then(response => { 
-                console.log('response find by id category', response);
                 if (response.data) {
                     this.editCategoryId = id;
                     this.currentDescription = response.data.description;
@@ -50,14 +48,12 @@ export default {
                     alert('Erro ao buscar a categoria!');
                 }
             }).catch(error => {
-                console.log('error find by id category', error);
                 alert('Erro ao buscar a categoria!');
             });
         },
 
         deleteCategory() {
             CategoryServices.remove(this.deleteCategoryId).then(response => { 
-                console.log('response delete category', response);
                 this.showDeleteModal = false;
 
                 if (response.data && response.data !== '') {
@@ -83,7 +79,6 @@ export default {
 
             const payload = { id: this.editCategoryId, description: this.currentDescription };
             CategoryServices.update(payload).then(response => { 
-                console.log('response update category', response);
                 this.showEditModal = false;
                 this.currentDescription = '';
                 this.editCategoryId = -1;
@@ -111,7 +106,6 @@ export default {
 
             const payload = { description: this.description};
             CategoryServices.insert(payload).then(response => { 
-                console.log('CategoryServices.insert response', response);
                 if (response.data && response.data !== '') {
                     alert('Categoria inserida com sucesso!');
                     this.description = '';

@@ -46,7 +46,6 @@
             }
 
             ArticleServices.getById(currentId).then(response => {
-                console.log('response get article', response);
                 const article = response.data;
                 if (article && article.id) {
                     this.author = article.author;

@@ -173,7 +173,6 @@ export default {
   methods: {
     checkIfIsToHideBars() {
       const pathname = location.pathname;
-      console.log("pathname", pathname);
       this.hideBars =
         pathname === "/login" ||
         pathname === "/register" ||
@@ -181,7 +180,6 @@ export default {
     },
     storeLoggedUser() {
       let sessionUser = Helpers.getSessionUser();
-      console.log('sessionUser', sessionUser);
       if (sessionUser !== null) {
         this.isAuthenticated = true;
         this.sessionUser = sessionUser;
