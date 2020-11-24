@@ -23,12 +23,10 @@ function AdminAuth(to, from, next) {
   if (token != undefined) {
     const request = Helpers.getRequestWithHeader();
     const url = 'https://we-know-backend.herokuapp.com/validate';
-    axios.post(url, {}, request).then ((response) => {
-      console.log(response);
+    axios.post(url, {}, request).then (() => {
         next();
-    }).catch((error) => {
+    }).catch(() => {
         Helpers.resetSessionUser();
-        console.log(error.response);
         next(loginUrl);
       });
   }
@@ -44,12 +42,10 @@ function LoginAuth(to, from, next) {
   if (token != undefined) {
     const request = Helpers.getRequestWithHeader();
     const url = 'https://we-know-backend.herokuapp.com/validateLogin';
-    axios.post(url, {}, request).then ((response) => {
-      console.log(response);
+    axios.post(url, {}, request).then (() => {
         next();
-    }).catch((error) => {
+    }).catch(() => {
         Helpers.resetSessionUser();
-        console.log(error.response);
         next(homeUrl);
       });
   }
@@ -103,4 +99,4 @@ const router = new VueRouter({
   routes
 })
 
-export default router
+export default router;

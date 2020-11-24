@@ -350,12 +350,11 @@ export default {
 
     deleteArticle() {
       ArticleServices.remove(this.deleteArticleId)
-        .then((response) => {
+        .then(() => {
           this.showModal = false;
           this.checkParams();
         })
-        .catch((error) => {
-          console.log("error delete article", error);
+        .catch(() => {
           this.showModal = false;
         });
     },
@@ -363,22 +362,18 @@ export default {
     updateStatus(id, status_article) {
       const payload = { id, status_article };
       ArticleServices.updateStatus(payload)
-        .then((response) => {
+        .then(() => {
           ArticleServices.updateApprovedBy({
             id: payload.id,
             approved_by: this.sessionUser.id,
           })
-            .then((response) => {
+            .then(() => {
               this.showReproveModal = false;
               this.checkParams();
             })
-            .catch((error) => {
-              console.log("error updateApprovedBy article", error);
-            });
+            .catch(() => alert('Erro ao manipular o artigo'));
         })
-        .catch((error) => {
-          console.log("error updateStatus article", error);
-        });
+        .catch(() => alert('Erro ao manipular o artigo'));
     },
 
     updateComments() {
@@ -389,11 +384,10 @@ export default {
 
       const payload = { id: this.reproveArticleId, comments: this.comments };
       ArticleServices.updateComments(payload)
-        .then((response) => {
+        .then(() => {
           this.updateStatus(payload.id, 2);
         })
-        .catch((error) => {
-          console.log("error updateStatus article", error);
+        .catch(() => {
           alert("Erro ao reprovar o artigo");
         });
     },

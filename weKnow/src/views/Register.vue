@@ -49,14 +49,11 @@
 </template>
 
 <script>
-import axios from 'axios';
+import CourseServices from '../js/services/CourseServices';
+import UserServices from '../js/services/UserServices';
 export default {
     created(){
-        axios.get("https://we-know-backend.herokuapp.com/course").then(res => {
-            this.getCourses = res.data;
-        }).catch(err => {
-            console.log(err);
-        })
+        CourseServices.getCourses().then(res => this.getCourses = res.data).catch(() => this.getCourses = []);
     },
     data(){
         return {
@@ -71,13 +68,15 @@ export default {
     },
     methods: {
         register(){
-            axios.post("https://we-know-backend.herokuapp.com//user",{
+            const payload = {
                 name: this.name,
                 password: this.password,
                 ra: this.ra,
                 course: this.course,
                 email: this.email
-            }).then(res => {
+            };
+
+            UserServices.insert(payload).then(res => {
                 console.log(res);
                 alert('Registro criado com sucesso!');
                 this.$router.push({name: 'Login'});
@@ -85,13 +84,8 @@ export default {
                 alert('Erro ao criar o registro');
                 var msgErro = err.response.data.err;
                 this.error = msgErro;
-            })
+            });
         },
-
-
-
-
-
     }
 }
 </script>

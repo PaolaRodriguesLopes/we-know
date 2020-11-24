@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import UserServices from '../js/services/UserServices';
 export default {
   data() {
     return {
@@ -71,43 +71,33 @@ export default {
   },
   methods: {
     recover() {
-      axios
-        .post("https://we-know-backend.herokuapp.com//recoverpassword", {
-          email: this.email,
-        })
-        .then((res) => {
+      UserServices.recoverPasswordByEmail(this.email).then(res => {
           this.status = res.status;
           this.error = false;
           document.getElementById("box-login").style.height = "500px";
-        })
-        .catch((err) => {
+      })
+      .catch((err) => {
           console.log(err);
           this.error = true;
           this.mensagem = " Email inválido!";
           document.getElementById("box-login").style.height = "500px";
-        });
+      });
     },
 
     saveNewPassword() {
-      axios
-        .post("https://we-know-backend.herokuapp.com//changepassword", {
-          email: this.email,
-          password: this.password,
-          token: this.token,
-        })
-        .then((res) => {
+      UserServices.saveNewPassword(this.email, this.password, this.token)
+      .then(res => {
           this.status = res.status;
           document.getElementById("box-login").style.height = "500px";
           this.error = false;
           alert("Senha atualizada com sucesso!");
           this.$router.push({ name: "Login" });
-        })
-        .catch((err) => {
+      })
+      .catch((err) => {
           console.log(err);
-
           this.error = true;
           this.mensagem = "Token inválido!";
-        });
+      });
     },
   },
 };

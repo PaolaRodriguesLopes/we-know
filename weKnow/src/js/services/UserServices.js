@@ -13,6 +13,19 @@ class UserServices {
         return await axios.get(url, request);
     }
 
+    async recoverPasswordByEmail(email) {
+        const url = `https://we-know-backend.herokuapp.com/recoverpassword`;
+        return await axios.post(url, { email: email });
+    }
+
+    async saveNewPassword(email, password, token) {
+        const payload = {
+            email: email, password: password, token: token
+        };
+        const url = `https://we-know-backend.herokuapp.com/changepassword`;
+        return await axios.post(url, payload);
+    }
+
     async getUsers() {
         const request = Helpers.getRequestWithHeader();
         return await axios.get(this.baseUrl, request);
