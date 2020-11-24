@@ -108,7 +108,6 @@ export default {
       this.id = currentId;
       ArticleServices.getById(currentId)
         .then((response) => {
-          console.log("response get article", response);
           const article = response.data;
           if (article && article.id) {
             this.author = article.author_id;
@@ -209,8 +208,6 @@ export default {
           category: this.category,
         };
 
-        console.log("payload", payload);
-
         if (this.id === -1) {
           payload.author = getSessionUser().id;
           this.insert(payload);
@@ -224,7 +221,6 @@ export default {
     insert(payload) {
       ArticleServices.insert(payload)
         .then((response) => {
-          console.log("ArticleServices insert response", response);
           if (response.data && response.data !== "") {
             alert("Novo artigo criado com sucesso!");
             location.href = `/Articles?id=${payload.author}`;
@@ -241,7 +237,6 @@ export default {
     update(payload) {
       ArticleServices.update(payload)
         .then((response) => {
-          console.log("ArticleServices update response", response);
           if (response.data && response.data !== "") {
             alert("Artigo atualizado com sucesso!");
             location.href = `/Articles?id=${payload.author}`;

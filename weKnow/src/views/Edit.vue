@@ -80,7 +80,6 @@
     export default {
         created(){
             const previousLocation = this.$route.params.previousUrl;
-            console.log('previousLocation', previousLocation);
             if (previousLocation !== undefined) {
                 this.previousLocation = previousLocation;
             }
@@ -144,7 +143,6 @@
 
             loadUser(id) {
                 UserServices.getById(id).then(response => {
-                    console.log(response);
                     this.id = response.data.id;
                     this.name = response.data.name;
                     this.email = response.data.email;

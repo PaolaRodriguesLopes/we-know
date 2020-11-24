@@ -135,7 +135,6 @@
         methods: {
             findAll() {
                 SubjectServices.getSubjects().then(response => {
-                    console.log('response get subject', response);
                     this.subjects = response.data;
                 }).catch(error => { 
                     console.log('error get subject', error);
@@ -154,7 +153,6 @@
 
             showEditModalSubject(id) {
                 SubjectServices.getById(id).then(response => { 
-                    console.log('response find by id subject', response);
                     if (response.data) {
                         this.editSubjectId = id;
                         this.currentDescription = response.data.description;
@@ -171,7 +169,6 @@
 
             deleteSubject() {
                 SubjectServices.remove(this.deleteSubjectId).then(response => { 
-                    console.log('response delete subject', response);
                     this.showDeleteModal = false;
 
                     if (response.data && response.data !== '') {
@@ -197,7 +194,6 @@
 
                 const payload = { id: this.editSubjectId, description: this.currentDescription };
                 SubjectServices.update(payload).then(response => { 
-                    console.log('response update subject', response);
                     this.showEditModal = false;
                     this.currentDescription = '';
                     this.editSubjectId = -1;
@@ -225,7 +221,6 @@
 
                 const payload = { description: this.description};
                 SubjectServices.insert(payload).then(response => { 
-                    console.log('SubjectServices.insert response', response);
                     if (response.data && response.data !== '') {
                         alert('Matéria inserida com sucesso!');
                         this.description = '';

@@ -10,7 +10,6 @@
           <thead>
             <tr class="headTable">
               <th>Título</th>
-              <!--<th>Descrição</th> -->
               <th>Status</th>
               <th>Modificado</th>
               <th>Ações</th>
@@ -20,10 +19,6 @@
             <tr v-for="article in articles" :key="article.id">
               <td class="textTitle">{{ article.title }}</td>
               
-              <!--
-              <td>{{ article.description }}</td>
-              -->
-
               <td class="textStatus" >
                 <p
                   :class="
@@ -281,7 +276,6 @@ export default {
         } else if (params.get("value") && params.get("criteria")) {
           const criteria = params.get("criteria");
           const value = params.get("value");
-          console.log("value", value, "criteria", criteria);
 
           if (criteria === "author_status") {
             this.findByAuthorWhereStatusIs(this.sessionUser.id, value);
@@ -357,7 +351,6 @@ export default {
     deleteArticle() {
       ArticleServices.remove(this.deleteArticleId)
         .then((response) => {
-          console.log("response delete article", response);
           this.showModal = false;
           this.checkParams();
         })
@@ -371,14 +364,11 @@ export default {
       const payload = { id, status_article };
       ArticleServices.updateStatus(payload)
         .then((response) => {
-          console.log("response updateStatus article", response);
-
           ArticleServices.updateApprovedBy({
             id: payload.id,
             approved_by: this.sessionUser.id,
           })
             .then((response) => {
-              console.log("response updateApprovedBy article", response);
               this.showReproveModal = false;
               this.checkParams();
             })
@@ -398,10 +388,8 @@ export default {
       }
 
       const payload = { id: this.reproveArticleId, comments: this.comments };
-      console.log("payload", payload);
       ArticleServices.updateComments(payload)
         .then((response) => {
-          console.log("response updateComments article", response);
           this.updateStatus(payload.id, 2);
         })
         .catch((error) => {
@@ -422,7 +410,6 @@ export default {
     },
 
     gotoUpdate(authorId, articleId) {
-      console.log("authorId", authorId, "articleId", articleId);
       if (this.compareUserWithAuthor(authorId)) {
         this.$router.push({
           name: "UpdateArticle",
@@ -439,7 +426,6 @@ export default {
     getUserRole() {
       if (this.sessionUser) {
         this.userRole = this.sessionUser.role;
-        console.log("userRole", this.userRole);
       }
     },
   },
