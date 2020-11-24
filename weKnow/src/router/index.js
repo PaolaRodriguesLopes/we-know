@@ -24,7 +24,7 @@ function AdminAuth(to, from, next) {
     const request = Helpers.getRequestWithHeader();
     const url = 'https://we-know-backend.herokuapp.com/validate';
     axios.post(url, {}, request).then ((response) => {
-        console.log(response);
+      console.log(response);
         next();
     }).catch((error) => {
         Helpers.resetSessionUser();
@@ -45,7 +45,7 @@ function LoginAuth(to, from, next) {
     const request = Helpers.getRequestWithHeader();
     const url = 'https://we-know-backend.herokuapp.com/validateLogin';
     axios.post(url, {}, request).then ((response) => {
-        console.log(response);
+      console.log(response);
         next();
     }).catch((error) => {
         Helpers.resetSessionUser();

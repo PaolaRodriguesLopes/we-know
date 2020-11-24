@@ -44,13 +44,10 @@ export default {
                 password: this.password,
                 email: this.email
             }).then(res => {
-                console.log(res);
                 if (res.data && res.data.token) {
                     localStorage.setItem('token',res.data.token);
-                    console.log('token', res.data.token);
 
                     UserServices.findByEmail(this.email).then(response => {
-                        console.log('UserServices.findByEmail response', response);
                         if(response.data && response.data.id) {
                             localStorage.setItem('sessionUser', JSON.stringify(response.data));
                             this.$router.push({name: 'Home', params: { hideBars: false }});

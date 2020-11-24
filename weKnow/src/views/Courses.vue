@@ -149,7 +149,6 @@
         methods: {
             findAll() {
                 CourseServices.getCourses().then(response => {
-                    console.log('response get course', response);
                     this.courses = response.data;
                 }).catch(error => { 
                     console.log('error get course', error);
@@ -168,7 +167,6 @@
 
             showEditModalCourse(id) {
                 CourseServices.getById(id).then(response => { 
-                    console.log('response find by id course', response);
                     if (response.data) {
                         this.editCourseId = id;
                         this.currentDescription = response.data.description;
@@ -186,7 +184,6 @@
 
             deleteCourse() {
                 CourseServices.remove(this.deleteCourseId).then(response => { 
-                    console.log('response delete course', response);
                     this.showDeleteModal = false;
 
                     if (response.data && response.data !== '') {
@@ -222,7 +219,6 @@
                 };
 
                 CourseServices.update(payload).then(response => { 
-                    console.log('response update course', response);
                     this.showEditModal = false;
                     this.currentDescription = this.currentDuration = '';
                     this.editCourseId = -1;
@@ -259,7 +255,6 @@
                 };
 
                 CourseServices.insert(payload).then(response => { 
-                    console.log('CourseServices.insert response', response);
                     if (response.data && response.data !== '') {
                         alert('Curso inserido com sucesso!');
                         this.description = this.duration = '';

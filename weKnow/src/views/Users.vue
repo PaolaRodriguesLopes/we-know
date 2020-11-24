@@ -81,8 +81,12 @@ export default {
             }
         }
 
+<<<<<<< HEAD
         axios.get("https://we-know-backend.herokuapp.com//user",req).then(res => {
             console.log(res);
+=======
+        axios.get("http://localhost:8686/user",req).then(res => {
+>>>>>>> master
             this.users = res.data;
         }).catch(err => {
             console.log(err);
