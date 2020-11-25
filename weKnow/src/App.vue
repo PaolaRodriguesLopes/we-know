@@ -380,4 +380,9 @@ select {
   float: left;
   width: 80%;
 }
+
+.home{
+  height: 500px;
+  overflow-x: auto;
+}
 </style>
