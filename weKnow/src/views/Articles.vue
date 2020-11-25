@@ -351,6 +351,7 @@ export default {
     deleteArticle() {
       ArticleServices.remove(this.deleteArticleId)
         .then((response) => {
+          console.log(response);
           this.showModal = false;
           this.checkParams();
         })
@@ -364,11 +365,13 @@ export default {
       const payload = { id, status_article };
       ArticleServices.updateStatus(payload)
         .then((response) => {
+          console.log(response);
           ArticleServices.updateApprovedBy({
             id: payload.id,
             approved_by: this.sessionUser.id,
           })
             .then((response) => {
+              console.log(response);
               this.showReproveModal = false;
               this.checkParams();
             })
@@ -390,6 +393,7 @@ export default {
       const payload = { id: this.reproveArticleId, comments: this.comments };
       ArticleServices.updateComments(payload)
         .then((response) => {
+          console.log(response);
           this.updateStatus(payload.id, 2);
         })
         .catch((error) => {

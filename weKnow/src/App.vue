@@ -52,7 +52,6 @@
               </router-link>
             </li>
           </div>
-          <li><a href="#">Ajuda</a></li>
           <hr />
           <li>
             <a href="/"> Últimos Artigos </a>

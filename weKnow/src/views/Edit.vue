@@ -32,7 +32,7 @@
 
                     <div>
                         <label class="label-login"> RA </label>
-                        <input type="text" placeholder="180000" class="input" v-model="ra">
+                        <input type="text" placeholder="180000" maxlength="6" class="input" v-model="ra">
                     </div>
 
                     <div>
