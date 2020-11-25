@@ -121,6 +121,8 @@ export default {
 .home {
   display: flex;
   flex-wrap: wrap;
+  height: 500px;
+  overflow-x: auto;
 }
 
 .home h2 {
