@@ -1,85 +1,56 @@
 # we-know
 
--> Após clonar o projeto, rodar o comando:
-npm i 
+## Integrantes 
+- Fernando Dias Motta (180016)
+- Paola Rodrigues Lopes (180115)
 
--> criar database com o nome "weknow"
-Tabelas:
+## Link Do Site 
+https://heuristic-wilson-494688.netlify.app/
+
+# Caso o Link não funcione
+Caso não consiga acessa-lo pode realizar o fluxo abaixo de instalação do nosso projeto.
+- Clonar o repositório: `git clone https://github.com/PaolaRodriguesLopes/we-know.git`
+- Caso não tenha o nodemon: `npm install nodemon`
+- Entrar na pasta API<br>
+`npm i`<br>
+`nodemon index.js`<br>
+obs: Caso a API não execute com o comando acima, tentar com: ´npx nodemon´
+- Entrar na pasta weKnow:<br>
+`npm i`<br>
+`npm run serve`
+### Atenção: rodar a API e o weKnow simultaneamente(cada um em um terminal)
+
+## Regras de Negócio 
+Para facilitar os testes já deixamos criados alguns fluxos no nosso banco de dados<br>
+Perfis já criados e disponíveis:
+
+- Perfil de Root:<br>
+email: `root@email.com`<br>
+senha: `root`<br>
+
+- Perfil de Professor:<br>
+email: `profjoao@email.com`<br>
+senha: `123`<br>
+
+- Perfil Usuário Comum:<br>
+email: `vitor@email.com`<br>
+senha: `123`<br>
+
+Nosso menu é dinâmico, ao criar uma nova matéria, a mesma é adicionada ao menu lateral, criando assim um novo filtro de artigos relacionados a nova matéria.<br>
+
+No perfil Root é possível realizar todas as ações do nosso sistema.<br>
+
+### Deixamos alguns fluxos criados para facilitar os testes, como por exempo: 
+- Artigos aprovados pelo usuário `profjoao@email.com`<br>
+- Um artigo reprovado com comentário no perfil `vitor@email.com`
+- Um artigo aguardando aprovação
+
+- ### Envio de Email 
+Recomendamos informar um email válido ao criar um novo cadastro de usuário, para que seja possível a recuperação de senha, principalmente no fluxo do admin que utilizamos uma senha padrão que precisa ser trocada por email no primeiro acesso.
 
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT '0',
-  `email` varchar(150) NOT NULL DEFAULT '0',
-  `password` varchar(200) NOT NULL DEFAULT '0',
-  `role` int(11) NOT NULL DEFAULT 0,
-  `course` int(10) DEFAULT '0',
-  `ra` varchar(10) DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
-
-
-CREATE TABLE IF NOT EXISTS `passwordtokens` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `token` varchar(200) NOT NULL DEFAULT '0',
-  `user_id` int(10) unsigned NOT NULL DEFAULT 0,
-  `used` tinyint(3) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `FK_passwordtokens_users` (`user_id`),
-  CONSTRAINT `FK_passwordtokens_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 
 
-CREATE TABLE IF NOT EXISTS `courses` (
-  `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(50) DEFAULT '0',
-  `duration` varchar(150) NOT NULL DEFAULT '0', 
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(50) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
-
-
-CREATE TABLE IF NOT EXISTS `subjects` (
-  `id` INT(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(50) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS `articles` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(100),
-  `description` varchar(250),
-  `text` MEDIUMTEXT,
-  `category` int(11),
-  `author` int(10),
-  `subject` varchar(10),
-  `published_date` datetime,
-  `last_changed` datetime,
-  `status_article` int(10),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=UTF8MB4;
-
-ALTER TABLE `articles` ADD `comments` VARCHAR(500) NULL DEFAULT NULL ;
-ALTER TABLE `articles` ADD `approved_by` INT NULL DEFAULT NULL ;
-
------------------------------------------------
-
-npm install nodemon
-
-Após fazer o clone da pasta weKnow, executar o comando npm i
-
-Para executar o projeto 
-abrir dois terminais 
-entrar na pasta de API e executar 
-nodemon .\index.js
-
-no outro terminal entrar na pasta do weKnow e executar 
-npm run serve
